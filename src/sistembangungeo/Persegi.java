@@ -52,13 +52,13 @@ class Persegi extends Bangun implements Runnable {
         Thread threadLuas =
                 new Thread(() -> {
                     hitungLuas();
-                    appendToGUI("\nThread Luas : " + Thread.currentThread().getName() + " Luas : " + getLuas()); // Output ke GUI
+                    appendToGUI("\nThread Luas Persegi : " + Thread.currentThread().getName() + " Luas : " + getLuas()); // Output ke GUI
                 });
 
         Thread threadKeliling =
                 new Thread(() -> {
                     hitungKeliling();
-                    appendToGUI("\nThread Keliling : " + Thread.currentThread().getName() + " Luas : " + getKeliling());
+                    appendToGUI("\nThread Keliling Persegi : " + Thread.currentThread().getName() + " Persegi : " + getKeliling());
                 });
 
         threadLuas.start();
