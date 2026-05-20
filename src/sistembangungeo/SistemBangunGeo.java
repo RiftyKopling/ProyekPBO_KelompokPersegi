@@ -137,12 +137,14 @@ public class SistemBangunGeo extends JFrame {
                     long start = System.currentTimeMillis();
                     for (int i = 1; i <= jumlah; i++) {
                         Persegi p = new Persegi(i);
+                        p.setOutputArea(hasil);
                         Thread t =  new Thread(p);
                         t.start();
                     }
+                    Thread.sleep(200);
                     long end = System.currentTimeMillis();
                     hasil.setText("=== TEST MULTITHREADING ===\n\n" + "Jumlah Data : " + jumlah + "\n" +
-                            "Estimasi Waktu : " + (end - start) + " ms"
+                            "Estimasi Waktu : " + (end - start) + " ms\n"
                     );
                 }
 

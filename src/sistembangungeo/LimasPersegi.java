@@ -25,6 +25,7 @@ class LimasPersegi extends Persegi {
     @Override
     void hitungLuas() {
         super.hitungLuas();
+        super.hitungKeliling();
         luasPermukaan = super.luas + (4 * (0.5 * super.sisi * tinggiSisi));
     }
 
