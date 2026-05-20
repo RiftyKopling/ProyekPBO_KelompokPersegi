@@ -57,7 +57,7 @@ public class SistemBangunGeo extends JFrame {
                     Thread t = new Thread(p);
                     t.start();
                     t.join();
-                    hasil.setText("=== PERSEGI ===\n\n" + "Sisi : " + p.sisi + "\n" + "Luas : " + p.luas + "\n" + "Keliling : " + p.keliling);
+                    hasil.setText("=== PERSEGI / " + p.jenisBangun + " ===\n\n" + "Sisi : " + p.sisi + "\n" + "Luas : " + p.luas + "\n" + "Keliling : " + p.keliling);
                 }
 
                 catch (Exception ex) {
@@ -86,7 +86,7 @@ public class SistemBangunGeo extends JFrame {
                     t.start();
                     t.join();
 
-                    hasil.setText("=== LIMAS PERSEGI ===\n\n" + "Sisi : " + lp.sisi + "\n" + "Luas Alas : " + lp.luas + "\n" + "Keliling Alas : " + lp.keliling + "\n" +
+                    hasil.setText("=== LIMAS PERSEGI / " + lp.jenisBangun + " ===\n\n" + "Sisi : " + lp.sisi + "\n" + "Luas Alas : " + lp.luas + "\n" + "Keliling Alas : " + lp.keliling + "\n" +
                             "Volume : " + lp.getVolume() + "\n" +
                             "Luas Permukaan : " + lp.getLuasPermukaan()
                     );
@@ -117,7 +117,7 @@ public class SistemBangunGeo extends JFrame {
                     t.start();
                     t.join();
 
-                    hasil.setText("=== PRISMA BUJUR SANGKAR ===\n\n" +"Sisi : " + pb.sisi + "\n" +
+                    hasil.setText("=== PRISMA BUJUR SANGKAR / " + pb.jenisBangun + " ===\n\n" +"Sisi : " + pb.sisi + "\n" +
                             "Luas Alas : " + pb.luas + "\n" +
                             "Keliling Alas : " + pb.keliling + "\n" +
                             "Volume : " + pb.getVolume() + "\n" +
