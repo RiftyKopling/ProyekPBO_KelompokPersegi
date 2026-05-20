@@ -1,11 +1,15 @@
 package sistembangungeo;
 
+import javax.swing.*;
+
 class LimasPersegi extends Persegi {
 
     private double tinggi;
     private double tinggiSisi;
     private double volume;
     private double luasPermukaan;
+    
+    private JTextArea outputArea;
 
     public LimasPersegi(double sisi,double tinggi,double tinggiSisi) {
         super(sisi);
@@ -38,24 +42,32 @@ class LimasPersegi extends Persegi {
         super.hitungLuas();
         volume = (super.luas * tinggi) / 3;
     }
+    
+    // Tambahkan setter
+    public void setOutputArea(JTextArea outputArea) {
+        this.outputArea = outputArea;
+    }
 
+    // Method helper untuk append text ke GUI
+    private void appendToGUI(String text) {
+        if (outputArea != null) {
+            SwingUtilities.invokeLater(() -> {
+                outputArea.append(text);
+            });
+        }
+    }
+    
     // MULTITHREADING
     @Override
     public void run() {
         Thread threadVolume = new Thread(() -> {
             hitungVolume();
-            System.out.println(
-                    "Thread Volume Limas : "
-                    + Thread.currentThread().getName()
-            );
+            appendToGUI("\nThread Volume Limas : " + Thread.currentThread().getName() + " Luas : " + getVolume());
         });
 
         Thread threadLuasPermukaan = new Thread(() -> {
             hitungLuas();
-            System.out.println(
-                    "Thread Luas Permukaan Limas : "
-                    + Thread.currentThread().getName()
-            );
+            appendToGUI("\nThread Luas Permukaan Limas : " + Thread.currentThread().getName() + " Luas Permukaan : " + getLuasPermukaan());
         });
 
         threadVolume.start();

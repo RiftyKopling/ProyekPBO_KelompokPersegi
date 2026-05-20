@@ -35,14 +35,16 @@ public class SistemBangunGeo extends JFrame {
         btnThread.setBounds(330, 140, 220, 40);
         hasil.setBounds(50, 220, 500, 180);
         hasil.setEditable(false);
-
+        JScrollPane scrollHasil = new JScrollPane(hasil);
+        scrollHasil.setBounds(50, 220, 500, 180);
+        
         // ADD
         add(title);
         add(btnPersegi);
         add(btnLimas);
         add(btnPrisma);
         add(btnThread);
-        add(hasil);
+        add(scrollHasil);
 
         // BUTTON PERSEGI
         btnPersegi.addActionListener(new ActionListener() {
@@ -133,19 +135,60 @@ public class SistemBangunGeo extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    int jumlah = Integer.parseInt(JOptionPane.showInputDialog("Jumlah Thread"));
-                    long start = System.currentTimeMillis();
-                    for (int i = 1; i <= jumlah; i++) {
-                        Persegi p = new Persegi(i);
-                        p.setOutputArea(hasil);
-                        Thread t =  new Thread(p);
-                        t.start();
+                    String input = JOptionPane.showInputDialog("Masukkan Jumlah Proses Multithread:");
+                    if (input == null) {
+                        return;
                     }
-                    Thread.sleep(200);
-                    long end = System.currentTimeMillis();
-                    hasil.setText("=== TEST MULTITHREADING ===\n\n" + "Jumlah Data : " + jumlah + "\n" +
-                            "Estimasi Waktu : " + (end - start) + " ms\n"
-                    );
+                    int jumlahProses = Integer.parseInt(input);
+
+                    hasil.setText("Running Threads...\n");
+
+                    java.util.Random rand = new java.util.Random();
+
+                    new Thread(() -> {
+                        try {
+                            for (int i = 1; i <= jumlahProses; i++) {
+                                final int idProses = i;
+
+                                final double randomSisi = 1 + rand.nextInt(20);
+                                final double randomTinggi = 1 + rand.nextInt(20);
+                                final double randomTinggiSisi = randomTinggi + 2;
+
+                                Thread tPersegi = new Thread(() -> {
+                                    Persegi p = new Persegi(randomSisi);
+                                    p.setOutputArea(hasil);
+                                    p.run();
+                                });
+
+                                Thread tPrisma = new Thread(() -> {
+                                    PrismaBujursangkar prisma = new PrismaBujursangkar(randomSisi, randomTinggi);
+                                    prisma.setOutputArea(hasil);
+                                    prisma.run();
+                                });
+
+                                Thread tLimas = new Thread(() -> {
+                                    LimasPersegi limas = new LimasPersegi(randomSisi, randomTinggi, randomTinggiSisi);
+                                    limas.setOutputArea(hasil);
+                                    limas.run();
+                                });
+
+                                tPersegi.start();
+                                tPrisma.start();
+                                tLimas.start();
+
+                                Thread.sleep(200);
+                                
+                                hasil.setCaretPosition(hasil.getDocument().getLength());
+                            }
+
+                            hasil.append("\nAll Threads Killed. Perhitungan Selesai!\n");
+                            
+                            hasil.setCaretPosition(hasil.getDocument().getLength());
+
+                        } catch (InterruptedException ie) {
+                            hasil.append("Terjadi interupsi pada thread!\n");
+                        }
+                    }).start();
                 }
 
                 catch (Exception ex) {

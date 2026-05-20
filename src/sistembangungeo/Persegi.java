@@ -37,23 +37,27 @@ class Persegi extends Bangun implements Runnable {
     void hitungKeliling() {
         keliling = 4 * sisi;
     }
+    
+    public double getLuas(){
+        return this.luas;
+    }
+    
+    public double getKeliling(){
+        return this.luas;
+    }
 
     @Override
     public void run() {
         Thread threadLuas =
                 new Thread(() -> {
                     hitungLuas();
-                    String pesan = "Thread Luas : " + Thread.currentThread().getName() + "\n";
-                    System.out.println(pesan);
-                    appendToGUI(pesan); // Output ke GUI
+                    appendToGUI("\nThread Luas : " + Thread.currentThread().getName() + " Luas : " + getLuas()); // Output ke GUI
                 });
 
         Thread threadKeliling =
                 new Thread(() -> {
                     hitungKeliling();
-                    String pesan = "Thread Keliling : " + Thread.currentThread().getName() + "\n";
-                    System.out.println(pesan);
-                    appendToGUI(pesan);
+                    appendToGUI("\nThread Keliling : " + Thread.currentThread().getName() + " Luas : " + getKeliling());
                 });
 
         threadLuas.start();
