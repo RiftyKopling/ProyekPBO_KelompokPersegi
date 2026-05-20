@@ -65,12 +65,12 @@ class PrismaBujursangkar extends Persegi {
         
         Thread threadVolume = new Thread(() -> {
             hitungVolume();
-            appendToGUI( "\nThread Volume Prisma : " + Thread.currentThread().getName() + " Volume : " + getVolume());
+            appendToGUI( "\nThread Volume Prisma : " + Thread.currentThread().getName() + " Volume : " + volume);
         });
 
         Thread threadLuasPermukaan = new Thread(() -> {
             hitungLuas();
-            appendToGUI( "\nThread Luas Permukaan Prisma : " + Thread.currentThread().getName() + " Luas Permukaan : " + getLuasPermukaan());
+            appendToGUI( "\nThread Luas Permukaan Prisma : " + Thread.currentThread().getName() + " Luas Permukaan : " + luasPermukaan);
         });
 
         threadVolume.start();

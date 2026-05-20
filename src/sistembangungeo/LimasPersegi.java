@@ -63,12 +63,12 @@ class LimasPersegi extends Persegi {
     public void run() {
         Thread threadVolume = new Thread(() -> {
             hitungVolume();
-            appendToGUI("\nThread Volume Limas : " + Thread.currentThread().getName() + " Volume : " + getVolume());
+            appendToGUI("\nThread Volume Limas : " + Thread.currentThread().getName() + " Volume : " + volume);
         });
 
         Thread threadLuasPermukaan = new Thread(() -> {
             hitungLuas();
-            appendToGUI("\nThread Luas Permukaan Limas : " + Thread.currentThread().getName() + " Luas Permukaan : " + getLuasPermukaan());
+            appendToGUI("\nThread Luas Permukaan Limas : " + Thread.currentThread().getName() + " Luas Permukaan : " + luasPermukaan);
         });
 
         threadVolume.start();
