@@ -34,6 +34,7 @@ class LimasPersegi extends Persegi {
     }
 
     void hitungVolume() {
+        super.hitungLuas();
         volume = (super.luas * tinggi) / 3;
     }
 

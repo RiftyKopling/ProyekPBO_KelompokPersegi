@@ -28,6 +28,7 @@ class PrismaBujursangkar extends Persegi {
     @Override
     void hitungLuas() {
         super.hitungLuas();
+        super.hitungKeliling();
         luasPermukaan = (2 * super.luas) + (super.keliling * tinggi);
     }
 
@@ -37,6 +38,7 @@ class PrismaBujursangkar extends Persegi {
     }
 
     void hitungVolume() {
+        super.hitungLuas();
         volume = super.luas * tinggi;
     }
 
