@@ -4,9 +4,6 @@ package sistembangungeo;
 
 import javax.swing.*;
 
-// FILE : PrismaBujurSangkar.java
-// =========================================
-
 class PrismaBujursangkar extends Persegi {
 
     private double tinggi;
@@ -19,6 +16,7 @@ class PrismaBujursangkar extends Persegi {
     public PrismaBujursangkar(double sisi, double tinggi) {
         super(sisi);
         this.tinggi = tinggi;
+        this.jenisBangun = "Bangun Ruang";
     }
 
     public double getVolume() {

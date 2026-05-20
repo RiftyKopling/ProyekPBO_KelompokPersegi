@@ -12,22 +12,9 @@ class Persegi extends Bangun implements Runnable {
 
     public Persegi(double sisi) {
         this.sisi = sisi;
+        this.jenisBangun = "Bangun Datar";
     }
     
-    // Tambahkan setter
-    public void setOutputArea(JTextArea outputArea) {
-        this.outputArea = outputArea;
-    }
-
-    // Method helper untuk append text ke GUI
-    private void appendToGUI(String text) {
-        if (outputArea != null) {
-            SwingUtilities.invokeLater(() -> {
-                outputArea.append(text);
-            });
-        }
-    }
-
     @Override
     void hitungLuas() {
         luas = sisi * sisi;
@@ -43,9 +30,23 @@ class Persegi extends Bangun implements Runnable {
     }
     
     public double getKeliling(){
-        return this.luas;
+        return this.keliling;
     }
 
+    // Tambahkan setter
+    public void setOutputArea(JTextArea outputArea) {
+        this.outputArea = outputArea;
+    }
+
+    // Method helper untuk append text ke GUI
+    private void appendToGUI(String text) {
+        if (outputArea != null) {
+            SwingUtilities.invokeLater(() -> {
+                outputArea.append(text);
+            });
+        }
+    }
+    
     @Override
     public void run() {
         Thread threadLuas =

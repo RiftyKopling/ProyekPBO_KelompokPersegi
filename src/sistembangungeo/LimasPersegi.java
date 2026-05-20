@@ -15,6 +15,7 @@ class LimasPersegi extends Persegi {
         super(sisi);
         this.tinggi = tinggi;
         this.tinggiSisi = tinggiSisi;
+        this.jenisBangun = "Bangun Ruang";
     }
 
     public double getVolume() {
@@ -62,7 +63,7 @@ class LimasPersegi extends Persegi {
     public void run() {
         Thread threadVolume = new Thread(() -> {
             hitungVolume();
-            appendToGUI("\nThread Volume Limas : " + Thread.currentThread().getName() + " Luas : " + getVolume());
+            appendToGUI("\nThread Volume Limas : " + Thread.currentThread().getName() + " Volume : " + getVolume());
         });
 
         Thread threadLuasPermukaan = new Thread(() -> {
