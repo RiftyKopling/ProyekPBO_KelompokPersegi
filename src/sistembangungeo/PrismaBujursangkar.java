@@ -1,7 +1,5 @@
 package sistembangungeo;
 
-// =========================================
-
 import javax.swing.*;
 
 class PrismaBujursangkar extends Persegi {
@@ -15,6 +13,8 @@ class PrismaBujursangkar extends Persegi {
 
     public PrismaBujursangkar(double sisi, double tinggi) {
         super(sisi);
+        super.hitungLuas();
+        super.hitungKeliling();
         this.tinggi = tinggi;
         this.jenisBangun = "Bangun Ruang";
     }
@@ -30,15 +30,14 @@ class PrismaBujursangkar extends Persegi {
     // POLYMORPHISM
     @Override
     void hitungLuas() {
-        super.hitungLuas();
-        super.hitungKeliling();
+
         luasPermukaan = (2 * super.luas) + (super.keliling * tinggi);
     }
 
-    @Override
-    void hitungKeliling() {
-        super.hitungKeliling();
-    }
+//    @Override
+//    void hitungKeliling() {
+//        super.hitungKeliling();
+//    }
 
     void hitungVolume() {
         super.hitungLuas();
@@ -75,7 +74,7 @@ class PrismaBujursangkar extends Persegi {
 
         threadVolume.start();
         threadLuasPermukaan.start();
-
+        
         try {
             threadVolume.join();
             threadLuasPermukaan.join();

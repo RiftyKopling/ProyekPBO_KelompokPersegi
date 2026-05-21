@@ -1,12 +1,17 @@
 package sistembangungeo;
 
+import java.awt.HeadlessException;
 import javax.swing.*;
 import java.awt.event.*;
 
 public class SistemBangunGeo extends JFrame {
-
+    
     // GLOBAL ATTRIBUTE
     private double sisiGlobal = 0;
+    LimasPersegi lp;
+    PrismaBujursangkar pb;
+    Persegi p;
+    
     // COMPONENT
     JLabel title = new JLabel("SISTEM BANGUN GEO");
     JButton btnPersegi = new JButton("Persegi");
@@ -47,7 +52,7 @@ public class SistemBangunGeo extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 try {
                     sisiGlobal = Double.parseDouble(JOptionPane.showInputDialog("Masukkan sisi"));
-                    Persegi p = new Persegi(sisiGlobal);
+                    p = new Persegi(sisiGlobal);
 
                     Thread t = new Thread(p);
                     t.start();
@@ -55,7 +60,7 @@ public class SistemBangunGeo extends JFrame {
                     hasil.setText("=== PERSEGI / " + p.jenisBangun + " ===\n\n" + "Sisi : " + p.sisi + "\n" + "Luas : " + p.luas + "\n" + "Keliling : " + p.keliling);
                 }
 
-                catch (Exception ex) {
+                catch (HeadlessException | InterruptedException | NumberFormatException ex) {
                     JOptionPane.showMessageDialog(
                             null,
                             "Input Salah"
@@ -66,6 +71,8 @@ public class SistemBangunGeo extends JFrame {
 
         // BUTTON LIMAS
         btnLimas.addActionListener(new ActionListener() {
+            double tinggiLimas;
+            double tinggiSisi;
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
@@ -73,10 +80,10 @@ public class SistemBangunGeo extends JFrame {
                         JOptionPane.showMessageDialog(null,"Hitung Persegi dulu!");
                         return;
                     }
-                    double tinggi = Double.parseDouble(JOptionPane.showInputDialog("Masukkan tinggi limas"));
-                    double tinggiSisi = Double.parseDouble(JOptionPane.showInputDialog("Masukkan tinggi sisi"));
+                    tinggiLimas = Double.parseDouble(JOptionPane.showInputDialog("Masukkan tinggi limas"));
+                    tinggiSisi = Double.parseDouble(JOptionPane.showInputDialog("Masukkan tinggi sisi"));
 
-                    LimasPersegi lp = new LimasPersegi(sisiGlobal,tinggi,tinggiSisi);
+                    lp = new LimasPersegi(sisiGlobal,tinggiLimas,tinggiSisi);
                     Thread t = new Thread(lp);
                     t.start();
                     t.join();
@@ -86,7 +93,7 @@ public class SistemBangunGeo extends JFrame {
                             "Luas Permukaan : " + lp.getLuasPermukaan()
                     );
                 }
-                catch (Exception ex) {
+                catch (HeadlessException | InterruptedException | NumberFormatException ex) {
                     JOptionPane.showMessageDialog(
                             null,
                             "Input Salah"
@@ -97,6 +104,7 @@ public class SistemBangunGeo extends JFrame {
 
         // BUTTON PRISMA
         btnPrisma.addActionListener(new ActionListener() {
+            double tinggiPrisma;
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
@@ -104,9 +112,9 @@ public class SistemBangunGeo extends JFrame {
                         JOptionPane.showMessageDialog(null,"Hitung Persegi dulu!");
                         return;
                     }
-                    double tinggi = Double.parseDouble(JOptionPane.showInputDialog("Masukkan tinggi prisma"));
+                    tinggiPrisma = Double.parseDouble(JOptionPane.showInputDialog("Masukkan tinggi prisma"));
 
-                    PrismaBujursangkar pb = new PrismaBujursangkar(sisiGlobal,tinggi);
+                    pb = new PrismaBujursangkar(sisiGlobal,tinggiPrisma);
 
                     Thread t = new Thread(pb);
                     t.start();

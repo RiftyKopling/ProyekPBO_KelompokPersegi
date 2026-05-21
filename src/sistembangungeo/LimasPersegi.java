@@ -13,6 +13,8 @@ class LimasPersegi extends Persegi {
 
     public LimasPersegi(double sisi,double tinggi,double tinggiSisi) {
         super(sisi);
+        super.hitungLuas();
+        super.hitungKeliling();
         this.tinggi = tinggi;
         this.tinggiSisi = tinggiSisi;
         this.jenisBangun = "Bangun Ruang";
@@ -29,15 +31,13 @@ class LimasPersegi extends Persegi {
     // POLYMORPHISM
     @Override
     void hitungLuas() {
-        super.hitungLuas();
-        super.hitungKeliling();
         luasPermukaan = super.luas + (4 * (0.5 * super.sisi * tinggiSisi));
     }
 
-    @Override
-    void hitungKeliling() {
-        super.hitungKeliling();
-    }
+//    @Override
+//    void hitungKeliling() {
+//        super.hitungKeliling();
+//    }
 
     void hitungVolume() {
         super.hitungLuas();
