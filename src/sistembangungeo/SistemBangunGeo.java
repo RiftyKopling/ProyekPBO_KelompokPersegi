@@ -9,15 +9,10 @@ public class SistemBangunGeo extends JFrame {
     private double sisiGlobal = 0;
     // COMPONENT
     JLabel title = new JLabel("SISTEM BANGUN GEO");
-
     JButton btnPersegi = new JButton("Persegi");
-
     JButton btnLimas = new JButton("Limas Persegi");
-
     JButton btnPrisma = new JButton("Prisma Bujur Sangkar");
-
     JButton btnThread = new JButton("Test Multithreading");
-
     JTextArea hasil = new JTextArea();
 
     public SistemBangunGeo() {
@@ -148,7 +143,7 @@ public class SistemBangunGeo extends JFrame {
                     new Thread(() -> {
                         try {
                             for (int i = 1; i <= jumlahProses; i++) {
-                                final int idProses = i;
+//                                final int idProses = i;
 
                                 final double randomSisi = 1 + rand.nextInt(20);
                                 final double randomTinggi = 1 + rand.nextInt(20);
@@ -188,9 +183,9 @@ public class SistemBangunGeo extends JFrame {
                         } catch (InterruptedException ie) {
                             hasil.append("Terjadi interupsi pada thread!\n");
                         }
+                        
                     }).start();
                 }
-
                 catch (Exception ex) {
                     JOptionPane.showMessageDialog(
                             null,
@@ -199,11 +194,14 @@ public class SistemBangunGeo extends JFrame {
                 }
             }
         });
-
+        
         setVisible(true);
     }
 
     public static void main(String[] args) {
-        new SistemBangunGeo();
+        SistemBangunGeo sb = new SistemBangunGeo();
+        sb.setVisible(true);
+        sb.setLocationRelativeTo(null);
+        sb.setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 }
