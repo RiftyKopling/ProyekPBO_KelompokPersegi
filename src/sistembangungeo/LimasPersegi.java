@@ -4,20 +4,52 @@ import javax.swing.*;
 
 class LimasPersegi extends Persegi {
 
-    private double tinggi;
-    private double tinggiSisi;
-    private double volume;
-    private double luasPermukaan;
-    
+    public double tinggi;
+    public double tinggiSisi;
+    public double volume;
+    public double luasPermukaan;
+
     private JTextArea outputArea;
 
-    public LimasPersegi(double sisi,double tinggi,double tinggiSisi) {
+    public LimasPersegi(double sisi, double tinggi, double tinggiSisi) {
         super(sisi);
-        super.hitungLuas();
-        super.hitungKeliling();
         this.tinggi = tinggi;
         this.tinggiSisi = tinggiSisi;
         this.jenisBangun = "Bangun Ruang";
+    }
+
+    // OVERRIDING
+    @Override
+    double hitungLuas() {
+        luasPermukaan = super.hitungLuas() + (4 * (0.5 * super.sisi * tinggiSisi));
+        return luasPermukaan;
+    }
+
+    // OVERLOADING
+    @Override
+    double hitungLuas(double sisi) {
+        return sisi * sisi;
+    }
+
+    @Override
+    double hitungKeliling() {
+        return super.hitungKeliling();
+    }
+
+    @Override
+    double hitungKeliling(double sisi) {
+        return 4 * sisi;
+    }
+
+    // OVERLOADING METHOD
+    double hitungVolume() {
+        volume = super.luas * tinggi / 3;
+        return volume;
+    }
+
+    // OVERLOADING
+    double hitungVolume(double sisi, double tinggi) {
+        return (sisi * sisi * tinggi) / 3;
     }
 
     public double getVolume() {
@@ -28,28 +60,10 @@ class LimasPersegi extends Persegi {
         return luasPermukaan;
     }
 
-    // POLYMORPHISM
-    @Override
-    void hitungLuas() {
-        luasPermukaan = super.luas + (4 * (0.5 * super.sisi * tinggiSisi));
-    }
-
-//    @Override
-//    void hitungKeliling() {
-//        super.hitungKeliling();
-//    }
-
-    void hitungVolume() {
-        super.hitungLuas();
-        volume = (super.luas * tinggi) / 3;
-    }
-    
-    // Tambahkan setter
     public void setOutputArea(JTextArea outputArea) {
         this.outputArea = outputArea;
     }
 
-    // Method helper untuk append text ke GUI
     private void appendToGUI(String text) {
         if (outputArea != null) {
             SwingUtilities.invokeLater(() -> {
@@ -57,28 +71,36 @@ class LimasPersegi extends Persegi {
             });
         }
     }
-    
-    // MULTITHREADING
+
     @Override
     public void run() {
         Thread threadVolume = new Thread(() -> {
-            hitungVolume();
-            appendToGUI("\nThread Volume Limas : " + Thread.currentThread().getName() + " Volume : " + volume);
+            appendToGUI(
+                    "\nThread Volume Limas : "
+                    + Thread.currentThread().getName()
+                    + " Volume : "
+                    + hitungVolume()
+            );
         });
 
-        Thread threadLuasPermukaan = new Thread(() -> {
-            hitungLuas();
-            appendToGUI("\nThread Luas Permukaan Limas : " + Thread.currentThread().getName() + " Luas Permukaan : " + luasPermukaan);
+        Thread threadLuas = new Thread(() -> {
+            appendToGUI(
+                    "\nThread Luas Permukaan Limas : "
+                    + Thread.currentThread().getName()
+                    + " Luas : "
+                    + hitungLuas()
+            );
         });
 
         threadVolume.start();
-        threadLuasPermukaan.start();
+        threadLuas.start();
 
         try {
             threadVolume.join();
-            threadLuasPermukaan.join();
+            threadLuas.join();
+
         }
-        catch (Exception e) {
+        catch (InterruptedException e) {
             e.printStackTrace();
         }
     }

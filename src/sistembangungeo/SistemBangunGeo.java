@@ -5,13 +5,14 @@ import javax.swing.*;
 import java.awt.event.*;
 
 public class SistemBangunGeo extends JFrame {
-    
+
     // GLOBAL ATTRIBUTE
     private double sisiGlobal = 0;
+    Bangun bangun;
+    Persegi p;
     LimasPersegi lp;
     PrismaBujursangkar pb;
-    Persegi p;
-    
+
     // COMPONENT
     JLabel title = new JLabel("SISTEM BANGUN GEO");
     JButton btnPersegi = new JButton("Persegi");
@@ -21,6 +22,7 @@ public class SistemBangunGeo extends JFrame {
     JTextArea hasil = new JTextArea();
 
     public SistemBangunGeo() {
+
         setTitle("Sistem Bangun Geo");
         setSize(650, 500);
         setLayout(null);
@@ -33,11 +35,10 @@ public class SistemBangunGeo extends JFrame {
         btnLimas.setBounds(330, 80, 220, 40);
         btnPrisma.setBounds(50, 140, 220, 40);
         btnThread.setBounds(330, 140, 220, 40);
-        hasil.setBounds(50, 220, 500, 180);
-        hasil.setEditable(false);
         JScrollPane scrollHasil = new JScrollPane(hasil);
         scrollHasil.setBounds(50, 220, 500, 180);
-        
+        hasil.setEditable(false);
+
         // ADD
         add(title);
         add(btnPersegi);
@@ -52,52 +53,59 @@ public class SistemBangunGeo extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 try {
                     sisiGlobal = Double.parseDouble(JOptionPane.showInputDialog("Masukkan sisi"));
-                    p = new Persegi(sisiGlobal);
 
+                    // POLYMORPHISM
+                    bangun = new Persegi(sisiGlobal);
+                    p = (Persegi) bangun;
                     Thread t = new Thread(p);
                     t.start();
                     t.join();
-                    hasil.setText("=== PERSEGI / " + p.jenisBangun + " ===\n\n" + "Sisi : " + p.sisi + "\n" + "Luas : " + p.luas + "\n" + "Keliling : " + p.keliling);
-                }
+                    hasil.setText("=== PERSEGI / " + p.jenisBangun + " ===\n\n"
+                            + "Sisi : " + p.sisi
+                            + "\nLuas : " + p.hitungLuas()
+                            + "\nKeliling : " + p.hitungKeliling()
+                            + "\nOverloading Luas(10) : " + p.hitungLuas(10));
 
+                }
                 catch (HeadlessException | InterruptedException | NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(
-                            null,
-                            "Input Salah"
-                    );
+                    JOptionPane.showMessageDialog(null, "Input Salah");
                 }
             }
         });
 
         // BUTTON LIMAS
         btnLimas.addActionListener(new ActionListener() {
+
             double tinggiLimas;
             double tinggiSisi;
+
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
                     if (sisiGlobal == 0) {
-                        JOptionPane.showMessageDialog(null,"Hitung Persegi dulu!");
+                        JOptionPane.showMessageDialog(null, "Hitung Persegi dulu!");
                         return;
                     }
                     tinggiLimas = Double.parseDouble(JOptionPane.showInputDialog("Masukkan tinggi limas"));
                     tinggiSisi = Double.parseDouble(JOptionPane.showInputDialog("Masukkan tinggi sisi"));
 
-                    lp = new LimasPersegi(sisiGlobal,tinggiLimas,tinggiSisi);
+                    // POLYMORPHISM
+                    bangun = new LimasPersegi(sisiGlobal, tinggiLimas, tinggiSisi);
+                    lp = (LimasPersegi) bangun;
                     Thread t = new Thread(lp);
                     t.start();
                     t.join();
+                    hasil.setText("=== LIMAS PERSEGI / " + lp.jenisBangun + " ===\n\n"
+                            + "Sisi : " + lp.sisi
+                            + "\nLuas Alas : " + lp.hitungLuas(lp.sisi)
+                            + "\nKeliling Alas : " + lp.hitungKeliling()
+                            + "\nVolume : " + lp.hitungVolume()
+                            + "\nLuas Permukaan : " + lp.hitungLuas()
+                            + "\nOverloading Volume : " + lp.hitungVolume(5, 10));
 
-                    hasil.setText("=== LIMAS PERSEGI / " + lp.jenisBangun + " ===\n\n" + "Sisi : " + lp.sisi + "\n" + "Luas Alas : " + lp.luas + "\n" + "Keliling Alas : " + lp.keliling + "\n" +
-                            "Volume : " + lp.getVolume() + "\n" +
-                            "Luas Permukaan : " + lp.getLuasPermukaan()
-                    );
                 }
                 catch (HeadlessException | InterruptedException | NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(
-                            null,
-                            "Input Salah"
-                    );
+                    JOptionPane.showMessageDialog(null, "Input Salah");
                 }
             }
         });
@@ -109,26 +117,27 @@ public class SistemBangunGeo extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 try {
                     if (sisiGlobal == 0) {
-                        JOptionPane.showMessageDialog(null,"Hitung Persegi dulu!");
+                        JOptionPane.showMessageDialog(null, "Hitung Persegi dulu!");
                         return;
                     }
                     tinggiPrisma = Double.parseDouble(JOptionPane.showInputDialog("Masukkan tinggi prisma"));
-
-                    pb = new PrismaBujursangkar(sisiGlobal,tinggiPrisma);
-
+                    // POLYMORPHISM
+                    bangun = new PrismaBujursangkar(sisiGlobal, tinggiPrisma);
+                    pb = (PrismaBujursangkar) bangun;
                     Thread t = new Thread(pb);
                     t.start();
                     t.join();
+                    hasil.setText("=== PRISMA BUJUR SANGKAR / " + pb.jenisBangun + " ===\n\n"
+                            + "Sisi : " + pb.sisi
+                            + "\nLuas Alas : " + pb.hitungLuas(pb.sisi)
+                            + "\nKeliling Alas : " + pb.hitungKeliling()
+                            + "\nVolume : " + pb.hitungVolume()
+                            + "\nLuas Permukaan : " + pb.hitungLuas()
+                            + "\nOverloading Volume : " + pb.hitungVolume(5, 10));
 
-                    hasil.setText("=== PRISMA BUJUR SANGKAR / " + pb.jenisBangun + " ===\n\n" +"Sisi : " + pb.sisi + "\n" +
-                            "Luas Alas : " + pb.luas + "\n" +
-                            "Keliling Alas : " + pb.keliling + "\n" +
-                            "Volume : " + pb.getVolume() + "\n" +
-                            "Luas Permukaan : " + pb.getLuasPermukaan()
-                    );
                 }
                 catch (Exception ex) {
-                    JOptionPane.showMessageDialog(null,"Input Salah");
+                    JOptionPane.showMessageDialog(null, "Input Salah");
                 }
             }
         });
@@ -140,76 +149,57 @@ public class SistemBangunGeo extends JFrame {
                 try {
                     String input = JOptionPane.showInputDialog("Masukkan Jumlah Proses Multithread:");
                     if (input == null) {
+
                         return;
                     }
                     int jumlahProses = Integer.parseInt(input);
-
                     hasil.setText("Running Threads...\n");
-
                     java.util.Random rand = new java.util.Random();
-
                     new Thread(() -> {
                         try {
                             for (int i = 1; i <= jumlahProses; i++) {
-//                                final int idProses = i;
-
                                 final double randomSisi = 1 + rand.nextInt(20);
                                 final double randomTinggi = 1 + rand.nextInt(20);
                                 final double randomTinggiSisi = randomTinggi + 2;
+                                Persegi p = new Persegi(randomSisi);
+                                PrismaBujursangkar prisma = new PrismaBujursangkar(randomSisi, randomTinggi);
+                                LimasPersegi limas = new LimasPersegi(randomSisi, randomTinggi, randomTinggiSisi);
 
-                                Thread tPersegi = new Thread(() -> {
-                                    Persegi p = new Persegi(randomSisi);
-                                    p.setOutputArea(hasil);
-                                    p.run();
-                                });
-
-                                Thread tPrisma = new Thread(() -> {
-                                    PrismaBujursangkar prisma = new PrismaBujursangkar(randomSisi, randomTinggi);
-                                    prisma.setOutputArea(hasil);
-                                    prisma.run();
-                                });
-
-                                Thread tLimas = new Thread(() -> {
-                                    LimasPersegi limas = new LimasPersegi(randomSisi, randomTinggi, randomTinggiSisi);
-                                    limas.setOutputArea(hasil);
-                                    limas.run();
-                                });
-
-                                tPersegi.start();
-                                tPrisma.start();
-                                tLimas.start();
-
+                                p.setOutputArea(hasil);
+                                prisma.setOutputArea(hasil);
+                                limas.setOutputArea(hasil);
+                                Thread t1 = new Thread(p);
+                                Thread t2 = new Thread(prisma);
+                                Thread t3 = new Thread(limas);
+                                t1.start();
+                                t2.start();
+                                t3.start();
+                                t1.join();
+                                t2.join();
+                                t3.join();
                                 Thread.sleep(200);
-                                
-                                hasil.setCaretPosition(hasil.getDocument().getLength());
+                                hasil.setCaretPosition(
+                                        hasil.getDocument().getLength()
+                                );
                             }
-
                             hasil.append("\nAll Threads Killed. Perhitungan Selesai!\n");
-                            
-                            hasil.setCaretPosition(hasil.getDocument().getLength());
-
-                        } catch (InterruptedException ie) {
+                        }
+                        catch (InterruptedException ie) {
                             hasil.append("Terjadi interupsi pada thread!\n");
                         }
-                        
                     }).start();
                 }
                 catch (Exception ex) {
-                    JOptionPane.showMessageDialog(
-                            null,
-                            "Input Salah"
-                    );
+                    JOptionPane.showMessageDialog(null, "Input Salah");
                 }
             }
         });
-        
+
         setVisible(true);
     }
 
     public static void main(String[] args) {
         SistemBangunGeo sb = new SistemBangunGeo();
-        sb.setVisible(true);
         sb.setLocationRelativeTo(null);
-        sb.setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 }

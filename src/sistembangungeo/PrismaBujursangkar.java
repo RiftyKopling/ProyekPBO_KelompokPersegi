@@ -4,19 +4,47 @@ import javax.swing.*;
 
 class PrismaBujursangkar extends Persegi {
 
-    private double tinggi;
+    public double tinggi;
 
-    private double volume;
-    private double luasPermukaan;
-    
+    public double volume;
+    public double luasPermukaan;
+
     private JTextArea outputArea;
 
     public PrismaBujursangkar(double sisi, double tinggi) {
         super(sisi);
-        super.hitungLuas();
-        super.hitungKeliling();
         this.tinggi = tinggi;
         this.jenisBangun = "Bangun Ruang";
+    }
+
+    @Override
+    double hitungLuas() {
+        luasPermukaan = (2 * super.hitungLuas()) + (super.hitungKeliling() * tinggi);
+        return luasPermukaan;
+    }
+
+    @Override
+    double hitungLuas(double sisi) {
+        return sisi * sisi;
+    }
+
+    @Override
+    double hitungKeliling() {
+        return super.hitungKeliling();
+    }
+
+    @Override
+    double hitungKeliling(double sisi) {
+        return 4 * sisi;
+    }
+
+    double hitungVolume() {
+        volume = super.luas * tinggi;
+        return volume;
+    }
+
+    double hitungVolume(double sisi, double tinggi) {
+        return sisi * sisi * tinggi;
     }
 
     public double getVolume() {
@@ -27,29 +55,10 @@ class PrismaBujursangkar extends Persegi {
         return luasPermukaan;
     }
 
-    // POLYMORPHISM
-    @Override
-    void hitungLuas() {
-
-        luasPermukaan = (2 * super.luas) + (super.keliling * tinggi);
-    }
-
-//    @Override
-//    void hitungKeliling() {
-//        super.hitungKeliling();
-//    }
-
-    void hitungVolume() {
-        super.hitungLuas();
-        volume = super.luas * tinggi;
-    }
-    
-    // Tambahkan setter
     public void setOutputArea(JTextArea outputArea) {
         this.outputArea = outputArea;
     }
 
-    // Method helper untuk append text ke GUI
     private void appendToGUI(String text) {
         if (outputArea != null) {
             SwingUtilities.invokeLater(() -> {
@@ -57,29 +66,36 @@ class PrismaBujursangkar extends Persegi {
             });
         }
     }
-    
-    // MULTITHREADING
+
     @Override
     public void run() {
-        
         Thread threadVolume = new Thread(() -> {
-            hitungVolume();
-            appendToGUI( "\nThread Volume Prisma : " + Thread.currentThread().getName() + " Volume : " + volume);
+            appendToGUI(
+                    "\nThread Volume Prisma : "
+                    + Thread.currentThread().getName()
+                    + " Volume : "
+                    + hitungVolume()
+            );
         });
 
-        Thread threadLuasPermukaan = new Thread(() -> {
-            hitungLuas();
-            appendToGUI( "\nThread Luas Permukaan Prisma : " + Thread.currentThread().getName() + " Luas Permukaan : " + luasPermukaan);
+        Thread threadLuas = new Thread(() -> {
+            appendToGUI(
+                    "\nThread Luas Prisma : "
+                    + Thread.currentThread().getName()
+                    + " Luas : "
+                    + hitungLuas()
+            );
         });
 
         threadVolume.start();
-        threadLuasPermukaan.start();
-        
+        threadLuas.start();
+
         try {
             threadVolume.join();
-            threadLuasPermukaan.join();
+            threadLuas.join();
+
         }
-        catch (Exception e) {
+        catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
