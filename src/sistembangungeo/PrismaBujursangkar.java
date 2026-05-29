@@ -24,21 +24,6 @@ class PrismaBujursangkar extends Persegi {
         return luasPermukaan;
     }
 
-    @Override
-    double hitungLuas(double sisi) {
-        return sisi * sisi;
-    }
-
-    @Override
-    double hitungKeliling() {
-        return super.keliling;
-    }
-
-    @Override
-    double hitungKeliling(double sisi) {
-        return 4 * sisi;
-    }
-
     double hitungVolume() {
         volume = super.luas * tinggi;
         return volume;

@@ -27,22 +27,6 @@ class LimasPersegi extends Persegi {
         return luasPermukaan;
     }
 
-    // OVERLOADING
-    @Override
-    double hitungLuas(double sisi) {
-        return sisi * sisi;
-    }
-
-    @Override
-    double hitungKeliling() {
-        return super.keliling;
-    }
-
-    @Override
-    double hitungKeliling(double sisi) {
-        return 4 * sisi;
-    }
-
     // OVERLOADING METHOD
     double hitungVolume() {
         volume = super.luas * tinggi / 3;
