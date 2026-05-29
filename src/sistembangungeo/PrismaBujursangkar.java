@@ -5,7 +5,6 @@ import javax.swing.*;
 class PrismaBujursangkar extends Persegi {
 
     public double tinggi;
-
     public double volume;
     public double luasPermukaan;
 
@@ -15,11 +14,13 @@ class PrismaBujursangkar extends Persegi {
         super(sisi);
         this.tinggi = tinggi;
         this.jenisBangun = "Bangun Ruang";
+        super.hitungLuas();
+        super.hitungKeliling();
     }
 
     @Override
     double hitungLuas() {
-        luasPermukaan = (2 * super.hitungLuas()) + (super.hitungKeliling() * tinggi);
+        luasPermukaan = (2 * super.luas) + (super.keliling * tinggi);
         return luasPermukaan;
     }
 
@@ -30,7 +31,7 @@ class PrismaBujursangkar extends Persegi {
 
     @Override
     double hitungKeliling() {
-        return super.hitungKeliling();
+        return super.keliling;
     }
 
     @Override

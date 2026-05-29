@@ -16,12 +16,14 @@ class LimasPersegi extends Persegi {
         this.tinggi = tinggi;
         this.tinggiSisi = tinggiSisi;
         this.jenisBangun = "Bangun Ruang";
+        super.hitungLuas();
+        super.hitungKeliling();
     }
 
     // OVERRIDING
     @Override
     double hitungLuas() {
-        luasPermukaan = super.hitungLuas() + (4 * (0.5 * super.sisi * tinggiSisi));
+        luasPermukaan = super.luas + (4 * (0.5 * super.sisi * tinggiSisi));
         return luasPermukaan;
     }
 
@@ -33,7 +35,7 @@ class LimasPersegi extends Persegi {
 
     @Override
     double hitungKeliling() {
-        return super.hitungKeliling();
+        return super.keliling;
     }
 
     @Override
