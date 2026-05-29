@@ -152,40 +152,58 @@ public class SistemBangunGeo extends JFrame {
 
                         return;
                     }
-                    int jumlahProses = Integer.parseInt(input);
-                    hasil.setText("Running Threads...\n");
-                    java.util.Random rand = new java.util.Random();
+
                     new Thread(() -> {
                         try {
-                            for (int i = 1; i <= jumlahProses; i++) {
-                                final double randomSisi = 1 + rand.nextInt(20);
-                                final double randomTinggi = 1 + rand.nextInt(20);
-                                final double randomTinggiSisi = randomTinggi + 2;
-                                Persegi p = new Persegi(randomSisi);
-                                PrismaBujursangkar prisma = new PrismaBujursangkar(randomSisi, randomTinggi);
-                                LimasPersegi limas = new LimasPersegi(randomSisi, randomTinggi, randomTinggiSisi);
+                            int jumlahProses = Integer.parseInt(input);
+                            hasil.setText("Starting Polymorphic Race...\n----------------------------");
 
-                                p.setOutputArea(hasil);
-                                prisma.setOutputArea(hasil);
-                                limas.setOutputArea(hasil);
-                                Thread t1 = new Thread(p);
-                                Thread t2 = new Thread(prisma);
-                                Thread t3 = new Thread(limas);
-                                t1.start();
-                                t2.start();
-                                t3.start();
-                                t1.join();
-                                t2.join();
-                                t3.join();
-                                Thread.sleep(200);
-                                hasil.setCaretPosition(
-                                        hasil.getDocument().getLength()
-                                );
+                            java.util.Random rand = new java.util.Random();
+                            java.util.List<Persegi> daftarBangun = new java.util.ArrayList<>();
+
+                            // 1. Populate polymorphic objects
+                            for (int i = 1; i <= jumlahProses; i++) {
+                                double randomSisi = 1 + rand.nextInt(20);
+                                double randomTinggi = 1 + rand.nextInt(20);
+                                double randomTinggiSisi = randomTinggi + 2;
+
+                                int pilihan = rand.nextInt(3);
+
+                                Persegi bangunYangDipilih;
+                                if (pilihan == 0) {
+                                    bangunYangDipilih = new Persegi(randomSisi);
+                                } else if (pilihan == 1) {
+                                    bangunYangDipilih = new PrismaBujursangkar(randomSisi, randomTinggi);
+                                } else {
+                                    bangunYangDipilih = new LimasPersegi(randomSisi, randomTinggi, randomTinggiSisi);
+                                }
+
+                                bangunYangDipilih.setOutputArea(hasil);
+                                bangunYangDipilih.setNomorAntrean(i);
+
+                                daftarBangun.add(bangunYangDipilih);
                             }
-                            hasil.append("\nAll Threads Killed. Perhitungan Selesai!\n");
-                        }
-                        catch (InterruptedException ie) {
-                            hasil.append("Terjadi interupsi pada thread!\n");
+
+                            // 2. Fire individual system threads for each geometry instance
+                            java.util.List<Thread> activeThreads = new java.util.ArrayList<>();
+                            for (Persegi b : daftarBangun) {
+                                Thread t = new Thread(b);
+                                activeThreads.add(t);
+                                t.start(); // Fires the shape into the outer layer race
+                            }
+
+                            // 3. Keep the "Finished" text waiting until the entire outer race terminates
+                            for (Thread t : activeThreads) {
+                                t.join();
+                            }
+
+                            javax.swing.SwingUtilities.invokeLater(() -> {
+                                hasil.append("\n\n----------------------------\nPerhitungan Selesai!");
+                                hasil.setCaretPosition(hasil.getDocument().getLength());
+                            });
+
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
                         }
                     }).start();
                 }

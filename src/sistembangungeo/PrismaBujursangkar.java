@@ -55,21 +55,17 @@ class PrismaBujursangkar extends Persegi {
 
     @Override
     public void run() {
+        appendToGUI("\n-> Start geometry thread - " + nomorAntrean + " (Prisma)");
+
         Thread threadVolume = new Thread(() -> {
             appendToGUI(
-                    "\nThread Volume Prisma : "
-                    + Thread.currentThread().getName()
-                    + " Volume : "
-                    + hitungVolume()
+                    "\n   [FINISH] Thread - " + nomorAntrean + " (Prisma Volume) -> " + hitungVolume()
             );
         });
 
         Thread threadLuas = new Thread(() -> {
             appendToGUI(
-                    "\nThread Luas Prisma : "
-                    + Thread.currentThread().getName()
-                    + " Luas : "
-                    + hitungLuas()
+                    "\n   [FINISH] Thread - " + nomorAntrean + " (Prisma Luas) -> " + hitungLuas()
             );
         });
 
@@ -79,9 +75,7 @@ class PrismaBujursangkar extends Persegi {
         try {
             threadVolume.join();
             threadLuas.join();
-
-        }
-        catch (InterruptedException e) {
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }

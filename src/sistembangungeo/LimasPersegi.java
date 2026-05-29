@@ -60,21 +60,17 @@ class LimasPersegi extends Persegi {
 
     @Override
     public void run() {
+        appendToGUI("\n-> Start geometry thread - " + nomorAntrean + " (Limas)");
+
         Thread threadVolume = new Thread(() -> {
             appendToGUI(
-                    "\nThread Volume Limas : "
-                    + Thread.currentThread().getName()
-                    + " Volume : "
-                    + hitungVolume()
+                    "\n   [FINISH] Thread - " + nomorAntrean + " (Limas Volume) -> " + hitungVolume()
             );
         });
 
         Thread threadLuas = new Thread(() -> {
             appendToGUI(
-                    "\nThread Luas Permukaan Limas : "
-                    + Thread.currentThread().getName()
-                    + " Luas : "
-                    + hitungLuas()
+                    "\n   [FINISH] Thread - " + nomorAntrean + " (Limas Luas) -> " + hitungLuas()
             );
         });
 
@@ -84,9 +80,7 @@ class LimasPersegi extends Persegi {
         try {
             threadVolume.join();
             threadLuas.join();
-
-        }
-        catch (InterruptedException e) {
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }

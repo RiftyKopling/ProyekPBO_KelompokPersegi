@@ -9,6 +9,8 @@ class Persegi extends Bangun implements Runnable {
     public double keliling;
 
     private JTextArea outputArea;
+    
+    public int nomorAntrean;
 
     // CONSTRUCTOR
     public Persegi(double sisi) {
@@ -48,6 +50,10 @@ class Persegi extends Bangun implements Runnable {
     public void setOutputArea(JTextArea outputArea) {
         this.outputArea = outputArea;
     }
+    
+    public void setNomorAntrean(int nomorAntrean) {
+        this.nomorAntrean = nomorAntrean;
+    }
 
     private void appendToGUI(String text) {
         if (outputArea != null) {
@@ -59,20 +65,17 @@ class Persegi extends Bangun implements Runnable {
 
     @Override
     public void run() {
+        // 1. Announce start immediately
+        appendToGUI("\n-> Start geometry thread - " + nomorAntrean + " (Persegi)");
+
         Thread threadLuas = new Thread(() -> {
             appendToGUI(
-                    "\nThread Luas Persegi : "
-                    + Thread.currentThread().getName()
-                    + " Luas : "
-                    + hitungLuas()
+                    "\n   [FINISH] Thread - " + nomorAntrean + " (Persegi Luas) -> " + hitungLuas()
             );
         });
         Thread threadKeliling = new Thread(() -> {
             appendToGUI(
-                    "\nThread Keliling Persegi : "
-                    + Thread.currentThread().getName()
-                    + " Keliling : "
-                    + hitungKeliling()
+                    "\n   [FINISH] Thread - " + nomorAntrean + " (Persegi Keliling) -> " + hitungKeliling()
             );
         });
 
@@ -82,9 +85,7 @@ class Persegi extends Bangun implements Runnable {
         try {
             threadLuas.join();
             threadKeliling.join();
-
-        }
-        catch (InterruptedException e) {
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
