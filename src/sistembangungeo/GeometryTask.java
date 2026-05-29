@@ -13,8 +13,8 @@ import javax.swing.SwingUtilities;
 
 public abstract class GeometryTask implements Runnable {
 
-    protected int queueNumber;
-    protected JTextArea outputArea;
+    public int queueNumber;
+    public JTextArea outputArea;
 
     public GeometryTask(int queueNumber, JTextArea outputArea) {
         this.queueNumber = queueNumber;
@@ -23,7 +23,6 @@ public abstract class GeometryTask implements Runnable {
 
     // Every distinct shape subclass must implement these two methods
     protected abstract String getShapeName();
-
     protected abstract String calculateResult();
 
     @Override
