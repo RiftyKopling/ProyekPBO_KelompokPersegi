@@ -55,7 +55,7 @@ class PrismaBujursangkar extends Persegi {
 
     @Override
     public void run() {
-        appendToGUI("\n-> Start geometry thread - " + nomorAntrean + " (Prisma Bujur Sangkar)");
+        appendToGUI("\n+ Start geometry thread - " + nomorAntrean + " (Prisma Bujur Sangkar)\n");
         
         /*
             Uncoment the delay for make the thread have it's computational time
@@ -87,11 +87,13 @@ class PrismaBujursangkar extends Persegi {
         }
         
         appendToGUI(String.format("""
-                                     [FINISH] Thread - %d (Prisma Bujur Sangkar)
-                                     Volume: %.2f
-                                     Luas Permukaan: %.2f
+                                  
+                                    - [FINISH] Thread - %d (Prisma Bujur Sangkar)
+                                        Sisi : %.2f , Tinggi : %.2f
+                                        Volume: %.2f
+                                        Luas Permukaan: %.2f
                                   """,
-                nomorAntrean, this.volume, this.luasPermukaan
+                nomorAntrean,this.sisi, this.tinggi, this.volume, this.luasPermukaan
         ));
     }
 }

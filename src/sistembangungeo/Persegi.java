@@ -65,7 +65,7 @@ class Persegi extends Bangun implements Runnable {
 
     @Override
     public void run() {
-        appendToGUI("\n-> Start geometry thread - " + nomorAntrean + " (Persegi)");
+        appendToGUI("\n+ Start geometry thread - " + nomorAntrean + " (Persegi)\n");
 
         /*
             Uncoment the delay for make the thread have it's computational time
@@ -99,11 +99,12 @@ class Persegi extends Bangun implements Runnable {
 
         appendToGUI(String.format("""
                                   
-                                     [FINISH] Thread - %d (Persegi)
-                                     Luas: %.2f
-                                     Keliling: %.2f
+                                    - [FINISH] Thread - %d (Persegi)
+                                        Sisi : %.2f
+                                        Luas: %.2f
+                                        Keliling: %.2f
                                   """,
-                nomorAntrean, this.luas, this.keliling
+                nomorAntrean, this.sisi, this.luas, this.keliling
         ));
     }
 }
