@@ -152,10 +152,16 @@ public class SistemBangunGeo extends JFrame {
 
                         return;
                     }
+                    
 
                     new Thread(() -> {
+                        int jumlahProses;
+                        long startTime, endTime, executionTime;
                         try {
-                            int jumlahProses = Integer.parseInt(input);
+                            // timer for time execution
+                            startTime = System.nanoTime();
+                            
+                            jumlahProses = Integer.parseInt(input);
                             hasil.setText("Starting Polymorphic Race...\n----------------------------");
 
                             java.util.Random rand = new java.util.Random();
@@ -195,9 +201,27 @@ public class SistemBangunGeo extends JFrame {
                             for (Thread t : activeThreads) {
                                 t.join();
                             }
-
+                            
+                            endTime = System.nanoTime();
+                            executionTime = endTime - startTime;
+                            
                             javax.swing.SwingUtilities.invokeLater(() -> {
                                 hasil.append("\n\n----------------------------\nPerhitungan Selesai!");
+                                if (executionTime >= 1_000_000_000L) {
+                                    double seconds = executionTime / 1_000_000_000.0;
+                                    hasil.append(String.format("\nTime execution %.5f s", seconds));
+
+                                } else if (executionTime >= 1_000_000L) {
+                                    double milliseconds = executionTime / 1_000_000.0;
+                                    hasil.append(String.format("\nTime execution %.2f ms", milliseconds));
+
+                                } else if (executionTime >= 1_000L) {
+                                    double microseconds = executionTime / 1_000.0;
+                                    hasil.append(String.format("\nTime execution %.2f us", microseconds));
+
+                                } else {
+                                    hasil.append(String.format("\nTime execution %d ns", executionTime));
+                                }
                                 hasil.setCaretPosition(hasil.getDocument().getLength());
                             });
 
