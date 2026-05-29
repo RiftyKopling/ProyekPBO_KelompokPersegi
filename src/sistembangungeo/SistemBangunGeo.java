@@ -161,7 +161,7 @@ public class SistemBangunGeo extends JFrame {
                             java.util.Random rand = new java.util.Random();
                             java.util.List<Persegi> daftarBangun = new java.util.ArrayList<>();
 
-                            // 1. Populate polymorphic objects
+                            // Using polymorphism instead batch excecution
                             for (int i = 1; i <= jumlahProses; i++) {
                                 double randomSisi = 1 + rand.nextInt(20);
                                 double randomTinggi = 1 + rand.nextInt(20);
@@ -184,15 +184,14 @@ public class SistemBangunGeo extends JFrame {
                                 daftarBangun.add(bangunYangDipilih);
                             }
 
-                            // 2. Fire individual system threads for each geometry instance
                             java.util.List<Thread> activeThreads = new java.util.ArrayList<>();
                             for (Persegi b : daftarBangun) {
                                 Thread t = new Thread(b);
                                 activeThreads.add(t);
-                                t.start(); // Fires the shape into the outer layer race
+                                t.start();
                             }
 
-                            // 3. Keep the "Finished" text waiting until the entire outer race terminates
+                            // make the excecution after to be waiting after all the thread is finished
                             for (Thread t : activeThreads) {
                                 t.join();
                             }

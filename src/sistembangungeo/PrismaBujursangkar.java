@@ -55,28 +55,43 @@ class PrismaBujursangkar extends Persegi {
 
     @Override
     public void run() {
-        appendToGUI("\n-> Start geometry thread - " + nomorAntrean + " (Prisma)");
-
+        appendToGUI("\n-> Start geometry thread - " + nomorAntrean + " (Prisma Bujur Sangkar)");
+        
+        /*
+            Uncoment the delay for make the thread have it's computational time
+            but it will remove the finish Interuption when in the caller list
+            so no interupt in the caller list
+        */
+//        try {
+//            Thread.sleep((long) (Math.random() * 900) + 100);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+        
         Thread threadVolume = new Thread(() -> {
-            appendToGUI(
-                    "\n   [FINISH] Thread - " + nomorAntrean + " (Prisma Volume) -> " + hitungVolume()
-            );
+            this.volume = hitungVolume();
         });
 
         Thread threadLuas = new Thread(() -> {
-            appendToGUI(
-                    "\n   [FINISH] Thread - " + nomorAntrean + " (Prisma Luas) -> " + hitungLuas()
-            );
+            this.luasPermukaan = hitungLuas();
         });
-
+        
         threadVolume.start();
         threadLuas.start();
-
+        
         try {
             threadVolume.join();
             threadLuas.join();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        
+        appendToGUI(String.format("""
+                                     [FINISH] Thread - %d (Prisma Bujur Sangkar)
+                                     Volume: %.2f
+                                     Luas Permukaan: %.2f
+                                  """,
+                nomorAntrean, this.volume, this.luasPermukaan
+        ));
     }
 }

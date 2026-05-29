@@ -65,28 +65,45 @@ class Persegi extends Bangun implements Runnable {
 
     @Override
     public void run() {
-        // 1. Announce start immediately
         appendToGUI("\n-> Start geometry thread - " + nomorAntrean + " (Persegi)");
 
-        Thread threadLuas = new Thread(() -> {
-            appendToGUI(
-                    "\n   [FINISH] Thread - " + nomorAntrean + " (Persegi Luas) -> " + hitungLuas()
-            );
-        });
-        Thread threadKeliling = new Thread(() -> {
-            appendToGUI(
-                    "\n   [FINISH] Thread - " + nomorAntrean + " (Persegi Keliling) -> " + hitungKeliling()
-            );
+        /*
+            Uncoment the delay for make the thread have it's computational time
+            but it will remove the finish Interuption when in the caller list
+            so no interupt in the caller list
+         */
+//        try {
+//            Thread.sleep((long) (Math.random() * 900) + 100);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+
+        
+        Thread threadVolume = new Thread(() -> {
+            this.luas = this.hitungLuas();
         });
 
+        Thread threadLuas = new Thread(() -> {
+            this.keliling = this.hitungKeliling();
+        });
+
+        threadVolume.start();
         threadLuas.start();
-        threadKeliling.start();
 
         try {
+            threadVolume.join();
             threadLuas.join();
-            threadKeliling.join();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
+        appendToGUI(String.format("""
+                                  
+                                     [FINISH] Thread - %d (Persegi)
+                                     Luas: %.2f
+                                     Keliling: %.2f
+                                  """,
+                nomorAntrean, this.luas, this.keliling
+        ));
     }
 }
