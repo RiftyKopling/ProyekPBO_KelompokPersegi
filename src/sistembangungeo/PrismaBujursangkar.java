@@ -57,17 +57,6 @@ class PrismaBujursangkar extends Persegi {
     public void run() {
         appendToGUI("\n+ Start geometry thread - " + nomorAntrean + " (Prisma Bujur Sangkar)\n");
         
-        /*
-            Uncoment the delay for make the thread have it's computational time
-            but it will remove the finish Interuption when in the caller list
-            so no interupt in the caller list
-        */
-//        try {
-//            Thread.sleep((long) (Math.random() * 900) + 100);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-        
         Thread threadVolume = new Thread(() -> {
             this.volume = hitungVolume();
         });
