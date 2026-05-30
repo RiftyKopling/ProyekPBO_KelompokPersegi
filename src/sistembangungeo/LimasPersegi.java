@@ -11,19 +11,35 @@ class LimasPersegi extends Persegi {
 
     private JTextArea outputArea;
 
-    public LimasPersegi(double sisi, double tinggi, double tinggiSisi) {
+    public LimasPersegi(double sisi, double tinggi) {
         super(sisi);
         this.tinggi = tinggi;
-        this.tinggiSisi = tinggiSisi;
         super.jenisBangun = "Bangun Ruang";
         super.hitungLuas();
         super.hitungKeliling();
+        hitungTinggiSisi(); // ini bisa dihapus
+    }
+    
+    double hitungTinggiSisi() { // ini masih rancu
+        tinggiSisi = Math.sqrt((this.tinggi * this.tinggi) + ((super.sisi /2) * (super.sisi /2)));
+        return tinggiSisi;
+    }
+    
+    double hitungTinggiSisi(double sisi, double tinggi) { // ini masih rancu
+        tinggiSisi = Math.sqrt((tinggi * tinggi) + ((sisi /2) * (sisi /2)));
+        return tinggiSisi;
     }
 
     // OVERRIDING
     @Override
     double hitungLuas() {
-        luasPermukaan = super.luas + (4 * (0.5 * super.sisi * tinggiSisi));
+        luasPermukaan = super.luas + (4 * (super.sisi * this.tinggiSisi) / 2 ); // this.tinggiSisi bisa diganti dengan this.hitungTinggiSisi(), menurutmu gimana kyaz
+        return luasPermukaan;
+    }
+    
+    // OVERLOADING
+    double hitungLuas(double sisi, double tinggi) {
+        luasPermukaan = super.hitungLuas(sisi) + (4 * (sisi * hitungTinggiSisi(sisi, tinggi)) / 2 );
         return luasPermukaan;
     }
 
@@ -35,15 +51,8 @@ class LimasPersegi extends Persegi {
 
     // OVERLOADING
     double hitungVolume(double sisi, double tinggi) {
-        return (sisi * sisi * tinggi) / 3;
-    }
-
-    public double getVolume() {
+        volume = (super.hitungLuas(sisi) * tinggi) / 3;
         return volume;
-    }
-
-    public double getLuasPermukaan() {
-        return luasPermukaan;
     }
 
     public void setOutputArea(JTextArea outputArea) {
@@ -61,17 +70,6 @@ class LimasPersegi extends Persegi {
     @Override
     public void run() {
         appendToGUI("\n+ Start geometry thread - " + nomorAntrean + " (Limas Persegi)\n");
-        
-        /*
-            Uncoment the delay for make the thread have it's computational time
-            but it will remove the finish Interuption when in the caller list
-            so no interupt in the caller list
-         */
-//        try {
-//            Thread.sleep((long) (Math.random() * 900) + 100);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
         
         Thread threadVolume = new Thread(() -> {
             this.volume = hitungVolume();

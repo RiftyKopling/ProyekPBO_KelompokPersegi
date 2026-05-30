@@ -4,15 +4,15 @@ import javax.swing.*;
 
 class PrismaBujursangkar extends Persegi {
 
-    public double tinggi;
+//    public double tinggi;
     public double volume;
     public double luasPermukaan;
 
     private JTextArea outputArea;
 
-    public PrismaBujursangkar(double sisi, double tinggi) {
+    public PrismaBujursangkar(double sisi) {
         super(sisi);
-        this.tinggi = tinggi;
+//        this.tinggi = tinggi; // ini ga kepakai kalau kata pak edo, karena tinggi make dari sisi
         super.jenisBangun = "Bangun Ruang";
         super.hitungLuas();
         super.hitungKeliling();
@@ -20,25 +20,23 @@ class PrismaBujursangkar extends Persegi {
 
     @Override
     double hitungLuas() {
-        luasPermukaan = (2 * super.luas) + (super.keliling * tinggi);
+        luasPermukaan = 4 * super.luas;
         return luasPermukaan;
     }
-
+    
+    double hitungLuas(double sisi) {
+        luasPermukaan = 4 * super.hitungLuas(sisi);
+        return luasPermukaan;
+    }
+    
     double hitungVolume() {
-        volume = super.luas * tinggi;
+        volume = super.luas * super.sisi; // ini masih rancu bisa juga super.sisi * super.sisi * super.sisi
         return volume;
     }
 
-    double hitungVolume(double sisi, double tinggi) {
-        return sisi * sisi * tinggi;
-    }
-
-    public double getVolume() {
+    double hitungVolume(double sisi) {
+        volume = super.hitungLuas(sisi) *  sisi; // ini masih rancu bisa juga sisi * sisi * sisi
         return volume;
-    }
-
-    public double getLuasPermukaan() {
-        return luasPermukaan;
     }
 
     public void setOutputArea(JTextArea outputArea) {
@@ -56,17 +54,6 @@ class PrismaBujursangkar extends Persegi {
     @Override
     public void run() {
         appendToGUI("\n+ Start geometry thread - " + nomorAntrean + " (Prisma Bujur Sangkar)\n");
-        
-        /*
-            Uncoment the delay for make the thread have it's computational time
-            but it will remove the finish Interuption when in the caller list
-            so no interupt in the caller list
-         */
-//        try {
-//            Thread.sleep((long) (Math.random() * 900) + 100);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
         
         Thread threadVolume = new Thread(() -> {
             this.volume = hitungVolume();
@@ -89,11 +76,11 @@ class PrismaBujursangkar extends Persegi {
         appendToGUI(String.format("""
                                   
                                     - [FINISH] Thread - %d (Prisma Bujur Sangkar)
-                                        Sisi : %.2f , Tinggi : %.2f
+                                        Sisi : %.2f
                                         Volume: %.2f
                                         Luas Permukaan: %.2f
                                   """,
-                nomorAntrean,this.sisi, this.tinggi, this.volume, this.luasPermukaan
+                nomorAntrean,this.sisi, this.volume, this.luasPermukaan
         ));
     }
 }

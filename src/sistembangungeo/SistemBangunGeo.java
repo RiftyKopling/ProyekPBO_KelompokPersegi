@@ -87,10 +87,9 @@ public class SistemBangunGeo extends JFrame {
                         return;
                     }
                     tinggiLimas = Double.parseDouble(JOptionPane.showInputDialog("Masukkan tinggi limas"));
-                    tinggiSisi = Double.parseDouble(JOptionPane.showInputDialog("Masukkan tinggi sisi"));
 
                     // POLYMORPHISM
-                    bangun = new LimasPersegi(sisiGlobal, tinggiLimas, tinggiSisi);
+                    bangun = new LimasPersegi(sisiGlobal, tinggiLimas);
                     lp = (LimasPersegi) bangun;
                     Thread t = new Thread(lp);
                     t.start();
@@ -120,9 +119,8 @@ public class SistemBangunGeo extends JFrame {
                         JOptionPane.showMessageDialog(null, "Hitung Persegi dulu!");
                         return;
                     }
-                    tinggiPrisma = Double.parseDouble(JOptionPane.showInputDialog("Masukkan tinggi prisma"));
                     // POLYMORPHISM
-                    bangun = new PrismaBujursangkar(sisiGlobal, tinggiPrisma);
+                    bangun = new PrismaBujursangkar(sisiGlobal);
                     pb = (PrismaBujursangkar) bangun;
                     Thread t = new Thread(pb);
                     t.start();
@@ -133,7 +131,7 @@ public class SistemBangunGeo extends JFrame {
                             + "\nKeliling Alas : " + pb.hitungKeliling()
                             + "\nVolume : " + pb.hitungVolume()
                             + "\nLuas Permukaan : " + pb.hitungLuas()
-                            + "\nOverloading Volume : " + pb.hitungVolume(5, 10));
+                            + "\nOverloading Volume : " + pb.hitungVolume(10));
 
                 }
                 catch (Exception ex) {
@@ -171,7 +169,7 @@ public class SistemBangunGeo extends JFrame {
                             for (int i = 1; i <= jumlahProses; i++) {
                                 double randomSisi = 1 + rand.nextInt(20);
                                 double randomTinggi = 1 + rand.nextInt(20);
-                                double randomTinggiSisi = randomTinggi + 2;
+//                                double randomTinggiSisi = randomTinggi + 2;
 
                                 int pilihan = rand.nextInt(3);
 
@@ -179,9 +177,9 @@ public class SistemBangunGeo extends JFrame {
                                 if (pilihan == 0) {
                                     bangunYangDipilih = new Persegi(randomSisi);
                                 } else if (pilihan == 1) {
-                                    bangunYangDipilih = new PrismaBujursangkar(randomSisi, randomTinggi);
+                                    bangunYangDipilih = new PrismaBujursangkar(randomSisi);
                                 } else {
-                                    bangunYangDipilih = new LimasPersegi(randomSisi, randomTinggi, randomTinggiSisi);
+                                    bangunYangDipilih = new LimasPersegi(randomSisi, randomTinggi);
                                 }
 
                                 bangunYangDipilih.setOutputArea(hasil);

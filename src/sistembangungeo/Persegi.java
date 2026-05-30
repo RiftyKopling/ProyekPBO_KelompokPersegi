@@ -18,33 +18,30 @@ class Persegi extends Bangun implements Runnable {
         super.jenisBangun = "Bangun Datar";
     }
 
-    // OVERLOADING CONSTRUCTOR
-    public Persegi() {
-        this.sisi = 1;
-    }
-
     // OVERRIDING
     @Override
     double hitungLuas() {
-        luas = sisi * sisi;
+        luas = this.sisi * this.sisi;
         return luas;
     }
 
     // OVERLOADING
     @Override
     double hitungLuas(double sisi) {
-        return sisi * sisi;
+        luas = sisi * sisi;
+        return luas;
     }
 
     @Override
     double hitungKeliling() {
-        keliling = 4 * sisi;
+        keliling = 4 * this.sisi;
         return keliling;
     }
 
     @Override
     double hitungKeliling(double sisi) {
-        return 4 * sisi;
+        keliling = 4 * sisi;
+        return keliling;
     }
 
     public void setOutputArea(JTextArea outputArea) {
@@ -66,18 +63,6 @@ class Persegi extends Bangun implements Runnable {
     @Override
     public void run() {
         appendToGUI("\n+ Start geometry thread - " + nomorAntrean + " (Persegi)\n");
-
-        /*
-            Uncoment the delay for make the thread have it's computational time
-            but it will remove the finish Interuption when in the caller list
-            so no interupt in the caller list
-         */
-//        try {
-//            Thread.sleep((long) (Math.random() * 900) + 100);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-
         
         Thread threadLuas = new Thread(() -> {
             this.luas = this.hitungLuas();
