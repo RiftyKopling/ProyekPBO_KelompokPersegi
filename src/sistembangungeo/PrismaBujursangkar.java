@@ -13,7 +13,7 @@ class PrismaBujursangkar extends Persegi {
     public PrismaBujursangkar(double sisi, double tinggi) {
         super(sisi);
         this.tinggi = tinggi;
-        this.jenisBangun = "Bangun Ruang";
+        super.jenisBangun = "Bangun Ruang";
         super.hitungLuas();
         super.hitungKeliling();
     }

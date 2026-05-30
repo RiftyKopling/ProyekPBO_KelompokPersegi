@@ -15,7 +15,7 @@ class Persegi extends Bangun implements Runnable {
     // CONSTRUCTOR
     public Persegi(double sisi) {
         this.sisi = sisi;
-        this.jenisBangun = "Bangun Datar";
+        super.jenisBangun = "Bangun Datar";
     }
 
     // OVERLOADING CONSTRUCTOR

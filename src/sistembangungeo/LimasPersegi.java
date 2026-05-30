@@ -15,7 +15,7 @@ class LimasPersegi extends Persegi {
         super(sisi);
         this.tinggi = tinggi;
         this.tinggiSisi = tinggiSisi;
-        this.jenisBangun = "Bangun Ruang";
+        super.jenisBangun = "Bangun Ruang";
         super.hitungLuas();
         super.hitungKeliling();
     }
