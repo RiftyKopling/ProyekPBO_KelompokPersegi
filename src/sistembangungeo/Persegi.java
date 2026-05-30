@@ -79,20 +79,20 @@ class Persegi extends Bangun implements Runnable {
 //        }
 
         
-        Thread threadVolume = new Thread(() -> {
+        Thread threadLuas = new Thread(() -> {
             this.luas = this.hitungLuas();
         });
 
-        Thread threadLuas = new Thread(() -> {
+        Thread threadKeliling = new Thread(() -> {
             this.keliling = this.hitungKeliling();
         });
 
-        threadVolume.start();
         threadLuas.start();
+        threadKeliling.start();
 
         try {
-            threadVolume.join();
             threadLuas.join();
+            threadKeliling.join();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
