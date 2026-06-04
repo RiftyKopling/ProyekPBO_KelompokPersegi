@@ -19,13 +19,14 @@ import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
  *
  * @author morxidia
  */
+
 public class View extends JFrame {
      // GLOBAL ATTRIBUTE
     private double sisiGlobal = 0;
     Bangun bangun;
-    Persegi p;
-    LimasPersegi lp;
-    PrismaBujursangkar pb;
+    Persegi persegi;
+    LimasPersegi limasPersegi;
+    PrismaBujursangkar prismaBujur;
 
     // COMPONENT
     JLabel title = new JLabel("SISTEM BANGUN GEO");
@@ -70,15 +71,15 @@ public class View extends JFrame {
 
                     // POLYMORPHISM
                     bangun = new Persegi(sisiGlobal);
-                    p = (Persegi) bangun;
-                    Thread t = new Thread(p);
+                    persegi = (Persegi) bangun;
+                    Thread t = new Thread(persegi);
                     t.start();
                     t.join();
-                    hasil.setText("=== PERSEGI / " + p.jenisBangun + " ===\n\n"
-                            + "Sisi : " + p.sisi
-                            + "\nLuas : " + p.hitungLuas()
-                            + "\nKeliling : " + p.hitungKeliling()
-                            + "\nOverloading Luas(10) : " + p.hitungLuas(10));
+                    hasil.setText("=== PERSEGI / " + persegi.jenisBangun + " ===\n\n"
+                            + "Sisi : " + persegi.sisi
+                            + "\nLuas : " + persegi.hitungLuas()
+                            + "\nKeliling : " + persegi.hitungKeliling()
+                            + "\nOverloading Luas(10) : " + persegi.hitungLuas(10));
 
                 }
                 catch (HeadlessException | InterruptedException | NumberFormatException ex) {
@@ -105,17 +106,17 @@ public class View extends JFrame {
 
                     // POLYMORPHISM
                     bangun = new LimasPersegi(sisiGlobal, tinggiLimas, tinggiSisi);
-                    lp = (LimasPersegi) bangun;
-                    Thread t = new Thread(lp);
+                    limasPersegi = (LimasPersegi) bangun;
+                    Thread t = new Thread(limasPersegi);
                     t.start();
                     t.join();
-                    hasil.setText("=== LIMAS PERSEGI / " + lp.jenisBangun + " ===\n\n"
-                            + "Sisi : " + lp.sisi
-                            + "\nLuas Alas : " + lp.hitungLuas(lp.sisi)
-                            + "\nKeliling Alas : " + lp.hitungKeliling()
-                            + "\nVolume : " + lp.hitungVolume()
-                            + "\nLuas Permukaan : " + lp.hitungLuas()
-                            + "\nOverloading Volume : " + lp.hitungVolume(5, 10));
+                    hasil.setText("=== LIMAS PERSEGI / " + limasPersegi.jenisBangun + " ===\n\n"
+                            + "Sisi : " + limasPersegi.sisi
+                            + "\nLuas Alas : " + limasPersegi.hitungLuas(limasPersegi.sisi)
+                            + "\nKeliling Alas : " + limasPersegi.hitungKeliling()
+                            + "\nVolume : " + limasPersegi.hitungVolume()
+                            + "\nLuas Permukaan : " + limasPersegi.hitungLuas()
+                            + "\nOverloading Volume : " + limasPersegi.hitungVolume(5, 10));
 
                 }
                 catch (HeadlessException | InterruptedException | NumberFormatException ex) {
@@ -137,17 +138,17 @@ public class View extends JFrame {
                     tinggiPrisma = Double.parseDouble(JOptionPane.showInputDialog("Masukkan tinggi prisma"));
                     // POLYMORPHISM
                     bangun = new PrismaBujursangkar(sisiGlobal, tinggiPrisma);
-                    pb = (PrismaBujursangkar) bangun;
-                    Thread t = new Thread(pb);
+                    prismaBujur = (PrismaBujursangkar) bangun;
+                    Thread t = new Thread(prismaBujur);
                     t.start();
                     t.join();
-                    hasil.setText("=== PRISMA BUJUR SANGKAR / " + pb.jenisBangun + " ===\n\n"
-                            + "Sisi : " + pb.sisi
-                            + "\nLuas Alas : " + pb.hitungLuas(pb.sisi)
-                            + "\nKeliling Alas : " + pb.hitungKeliling()
-                            + "\nVolume : " + pb.hitungVolume()
-                            + "\nLuas Permukaan : " + pb.hitungLuas()
-                            + "\nOverloading Volume : " + pb.hitungVolume(5, 10));
+                    hasil.setText("=== PRISMA BUJUR SANGKAR / " + prismaBujur.jenisBangun + " ===\n\n"
+                            + "Sisi : " + prismaBujur.sisi
+                            + "\nLuas Alas : " + prismaBujur.hitungLuas(prismaBujur.sisi)
+                            + "\nKeliling Alas : " + prismaBujur.hitungKeliling()
+                            + "\nVolume : " + prismaBujur.hitungVolume()
+                            + "\nLuas Permukaan : " + prismaBujur.hitungLuas()
+                            + "\nOverloading Volume : " + prismaBujur.hitungVolume(5, 10));
 
                 }
                 catch (Exception ex) {
@@ -172,7 +173,6 @@ public class View extends JFrame {
                         int jumlahProses;
                         long startTime, endTime, executionTime;
                         try {
-                            // timer for time execution
                             startTime = System.nanoTime();
                             
                             jumlahProses = Integer.parseInt(input);
@@ -205,10 +205,10 @@ public class View extends JFrame {
                             }
 
                             java.util.List<Thread> activeThreads = new java.util.ArrayList<>();
-                            for (Persegi b : daftarBangun) {
-                                Thread t = new Thread(b);
-                                activeThreads.add(t);
-                                t.start();
+                            for (Persegi bangun : daftarBangun) {
+                                Thread thread = new Thread(bangun);
+                                activeThreads.add(thread);
+                                thread.start();
                             }
 
                             // make the excecution after to be waiting after all the thread is finished

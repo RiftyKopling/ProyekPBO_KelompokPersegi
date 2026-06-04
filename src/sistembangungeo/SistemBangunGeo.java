@@ -5,11 +5,14 @@ import javax.swing.*;
 import java.awt.event.*;
 
 public class SistemBangunGeo {
-
-   
-
     public static void main(String[] args) {
-        SistemBangunGeo sb = new SistemBangunGeo();
-        sb.setLocationRelativeTo(null);
+        try{
+            SwingUtilities.invokeLater(() -> {
+                new View().setVisible(true);
+            });
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
     }
 }
