@@ -2,7 +2,7 @@ package sistembangungeo;
 
 import javax.swing.*;
 
-class LimasPersegi extends Persegi {
+class LimasPersegi extends Persegi implements Runnable {
 
     public double tinggi;
     public double tinggiSisi;
