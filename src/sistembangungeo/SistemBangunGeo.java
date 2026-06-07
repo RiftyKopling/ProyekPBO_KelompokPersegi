@@ -74,8 +74,12 @@ public class SistemBangunGeo extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 resetTampilan(progressScroll);
                 try {
-                    
                     Double sisiPersegi = Double.parseDouble(JOptionPane.showInputDialog("Masukkan sisi"));
+
+                    // throw new exception for input 0 or lower
+                    if(sisiPersegi <= 0){
+                        throw new Exception("Input can't be 0 or lower");
+                    }
                     sisiGlobal[0] = sisiPersegi;
                     // POLYMORPHISM
                     Bangun bangun = new Persegi(sisiPersegi);
@@ -90,7 +94,9 @@ public class SistemBangunGeo extends JFrame {
 
                 }
                 catch (HeadlessException | InterruptedException | NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(null, "Input Salah");
+                    JOptionPane.showMessageDialog(null, "Input Invalid, Do not input non numerical value");
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null, ex.getMessage());
                 }
             }
         });
@@ -105,8 +111,13 @@ public class SistemBangunGeo extends JFrame {
                         JOptionPane.showMessageDialog(null, "Hitung Persegi dulu!");
                         return;
                     }
+                    
                     Double tinggiLimas = Double.parseDouble(JOptionPane.showInputDialog("Masukkan tinggi limas"));
-
+                    
+                    // throw new exception for input 0 or lower
+                    if(tinggiLimas <= 0){
+                        throw new Exception("Input can't be 0 or lower");
+                    }
                     // POLYMORPHISM
                     Bangun bangun = new LimasPersegi(sisiGlobal[0], tinggiLimas);
                     LimasPersegi limasPersegi = (LimasPersegi) bangun;
@@ -122,7 +133,9 @@ public class SistemBangunGeo extends JFrame {
 
                 }
                 catch (HeadlessException | InterruptedException | NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(null, "Input Salah");
+                    JOptionPane.showMessageDialog(null, "Input Invalid, Do not input non numerical value");
+                }catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null, ex.getMessage());
                 }
             }
         });
@@ -137,6 +150,7 @@ public class SistemBangunGeo extends JFrame {
                         JOptionPane.showMessageDialog(null, "Hitung Persegi dulu!");
                         return;
                     }
+                    
                     // POLYMORPHISM
                     Bangun bangun = new PrismaBujursangkar(sisiGlobal[0]);
                     PrismaBujursangkar prismaBujur = (PrismaBujursangkar) bangun;
@@ -152,7 +166,7 @@ public class SistemBangunGeo extends JFrame {
                             + "\nLuas Permukaan : " + prismaBujur.hitungLuas());
                 }
                 catch (Exception ex) {
-                    JOptionPane.showMessageDialog(null, "Input Salah");
+                    JOptionPane.showMessageDialog(null, "Input Invalid, Do not input non numerical value");
                 }
             }
         });
