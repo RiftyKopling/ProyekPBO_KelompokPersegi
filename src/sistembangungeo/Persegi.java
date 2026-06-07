@@ -7,38 +7,51 @@ class Persegi extends Bangun implements Runnable {
     public double sisi;
     public double luas;
     public double keliling;
-    
-    private JTextArea outputArea;
 
+    private JTextArea outputArea;
+    
+    public int nomorAntrean;
+
+    // CONSTRUCTOR
     public Persegi(double sisi) {
         this.sisi = sisi;
-        this.jenisBangun = "Bangun Datar";
+        super.jenisBangun = "Bangun Datar";
     }
-    
+
+    // OVERRIDING
     @Override
-    void hitungLuas() {
+    double hitungLuas() {
+        luas = this.sisi * this.sisi;
+        return luas;
+    }
+
+    // OVERLOADING
+    @Override
+    double hitungLuas(double sisi) {
         luas = sisi * sisi;
+        return luas;
     }
 
     @Override
-    void hitungKeliling() {
-        keliling = 4 * sisi;
-    }
-    
-    public double getLuas(){
-        return this.luas;
-    }
-    
-    public double getKeliling(){
-        return this.keliling;
+    double hitungKeliling() {
+        keliling = 4 * this.sisi;
+        return keliling;
     }
 
-    // Tambahkan setter
+    @Override
+    double hitungKeliling(double sisi) {
+        keliling = 4 * sisi;
+        return keliling;
+    }
+
     public void setOutputArea(JTextArea outputArea) {
         this.outputArea = outputArea;
     }
+    
+    public void setNomorAntrean(int nomorAntrean) {
+        this.nomorAntrean = nomorAntrean;
+    }
 
-    // Method helper untuk append text ke GUI
     private void appendToGUI(String text) {
         if (outputArea != null) {
             SwingUtilities.invokeLater(() -> {
@@ -46,20 +59,18 @@ class Persegi extends Bangun implements Runnable {
             });
         }
     }
-    
+
     @Override
     public void run() {
-        Thread threadLuas =
-                new Thread(() -> {
-                    hitungLuas();
-                    appendToGUI("\nThread Luas Persegi : " + Thread.currentThread().getName() + " Luas : " + luas); // Output ke GUI
-                });
+        appendToGUI("\n+ Start geometry thread - " + nomorAntrean + " (Persegi)\n");
+        
+        Thread threadLuas = new Thread(() -> {
+            this.luas = this.hitungLuas();
+        });
 
-        Thread threadKeliling =
-                new Thread(() -> {
-                    hitungKeliling();
-                    appendToGUI("\nThread Keliling Persegi : " + Thread.currentThread().getName() + " Persegi : " + keliling);
-                });
+        Thread threadKeliling = new Thread(() -> {
+            this.keliling = this.hitungKeliling();
+        });
 
         threadLuas.start();
         threadKeliling.start();
@@ -67,10 +78,18 @@ class Persegi extends Bangun implements Runnable {
         try {
             threadLuas.join();
             threadKeliling.join();
-
-        }
-        catch (Exception e) {
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
+        appendToGUI(String.format("""
+                                  
+                                    - [FINISH] Thread - %d (Persegi)
+                                        Sisi : %.2f
+                                        Luas: %.2f
+                                        Keliling: %.2f
+                                  """,
+                nomorAntrean, this.sisi, this.luas, this.keliling
+        ));
     }
 }

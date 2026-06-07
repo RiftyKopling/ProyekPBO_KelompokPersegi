@@ -4,52 +4,45 @@ import javax.swing.*;
 
 class PrismaBujursangkar extends Persegi {
 
-    private double tinggi;
+//    public double tinggi;
+    public double volume;
+    public double luasPermukaan;
 
-    private double volume;
-    private double luasPermukaan;
-    
     private JTextArea outputArea;
 
-    public PrismaBujursangkar(double sisi, double tinggi) {
+    public PrismaBujursangkar(double sisi) {
         super(sisi);
+//        this.tinggi = tinggi; // ini ga kepakai kalau kata pak edo, karena tinggi make dari sisi
+        super.jenisBangun = "Bangun Ruang";
         super.hitungLuas();
         super.hitungKeliling();
-        this.tinggi = tinggi;
-        this.jenisBangun = "Bangun Ruang";
     }
 
-    public double getVolume() {
+    @Override
+    double hitungLuas() {
+        luasPermukaan = 4 * super.luas;
+        return luasPermukaan;
+    }
+    
+    double hitungLuas(double sisi) {
+        luasPermukaan = 4 * super.hitungLuas(sisi);
+        return luasPermukaan;
+    }
+    
+    double hitungVolume() {
+        volume = super.luas * super.sisi; // ini masih rancu bisa juga super.sisi * super.sisi * super.sisi
         return volume;
     }
 
-    public double getLuasPermukaan() {
-        return luasPermukaan;
+    double hitungVolume(double sisi) {
+        volume = super.hitungLuas(sisi) *  sisi; // ini masih rancu bisa juga sisi * sisi * sisi
+        return volume;
     }
 
-    // POLYMORPHISM
-    @Override
-    void hitungLuas() {
-
-        luasPermukaan = (2 * super.luas) + (super.keliling * tinggi);
-    }
-
-//    @Override
-//    void hitungKeliling() {
-//        super.hitungKeliling();
-//    }
-
-    void hitungVolume() {
-        super.hitungLuas();
-        volume = super.luas * tinggi;
-    }
-    
-    // Tambahkan setter
     public void setOutputArea(JTextArea outputArea) {
         this.outputArea = outputArea;
     }
 
-    // Method helper untuk append text ke GUI
     private void appendToGUI(String text) {
         if (outputArea != null) {
             SwingUtilities.invokeLater(() -> {
@@ -57,30 +50,37 @@ class PrismaBujursangkar extends Persegi {
             });
         }
     }
-    
-    // MULTITHREADING
+
     @Override
     public void run() {
+        appendToGUI("\n+ Start geometry thread - " + nomorAntrean + " (Prisma Bujur Sangkar)\n");
         
         Thread threadVolume = new Thread(() -> {
-            hitungVolume();
-            appendToGUI( "\nThread Volume Prisma : " + Thread.currentThread().getName() + " Volume : " + volume);
+            this.volume = hitungVolume();
         });
 
-        Thread threadLuasPermukaan = new Thread(() -> {
-            hitungLuas();
-            appendToGUI( "\nThread Luas Permukaan Prisma : " + Thread.currentThread().getName() + " Luas Permukaan : " + luasPermukaan);
+        Thread threadLuas = new Thread(() -> {
+            this.luasPermukaan = hitungLuas();
         });
-
+        
         threadVolume.start();
-        threadLuasPermukaan.start();
+        threadLuas.start();
         
         try {
             threadVolume.join();
-            threadLuasPermukaan.join();
-        }
-        catch (Exception e) {
+            threadLuas.join();
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        
+        appendToGUI(String.format("""
+                                  
+                                    - [FINISH] Thread - %d (Prisma Bujur Sangkar)
+                                        Sisi : %.2f
+                                        Volume: %.2f
+                                        Luas Permukaan: %.2f
+                                  """,
+                nomorAntrean,this.sisi, this.volume, this.luasPermukaan
+        ));
     }
 }
