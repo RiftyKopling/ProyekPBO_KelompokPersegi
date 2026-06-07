@@ -5,7 +5,8 @@ import javax.swing.*;
 class LimasPersegi extends Persegi implements Runnable {
 
     public double tinggi;
-    public double tinggiSisi;
+    // apotema, represent the slant height, or the height of the triangle from pyramid.
+    public double apotema;
     public double volume;
     public double luasPermukaan;
 
@@ -17,29 +18,48 @@ class LimasPersegi extends Persegi implements Runnable {
         super.jenisBangun = "Bangun Ruang";
         super.hitungLuas();
         super.hitungKeliling();
-        hitungTinggiSisi(); // ini bisa dihapus
+        this.hitungTinggiSisi();
     }
     
-    double hitungTinggiSisi() { // ini masih rancu
-        tinggiSisi = Math.sqrt((this.tinggi * this.tinggi) + ((super.sisi /2) * (super.sisi /2)));
-        return tinggiSisi;
+    double hitungTinggiSisi() { 
+        // pytagoras theorem c^2 = squareroot(a^2 + b^2), if you don't know just read the book retard
+        // Apotema Alas adalah jarak dari pusat alas ke tengah sisi alas (sisi/2)
+        double apotemaAlas = this.sisi/2;
+        // Menggunakan Teorema Phytagoras pada segitiga siku-siku yang dibentuk oleh:
+        // tinggi limas (A) dan apotema alas (B) untuk mencari tinggi sisi tegak (c)
+        double A = Math.pow(this.tinggi,2);
+        double B = Math.pow(apotemaAlas, 2);
+        apotema = Math.sqrt(A + B);
+        return apotema;
     }
     
-    double hitungTinggiSisi(double sisi, double tinggi) { // ini masih rancu
-        tinggiSisi = Math.sqrt((tinggi * tinggi) + ((sisi /2) * (sisi /2)));
-        return tinggiSisi;
+    double hitungTinggiSisi(double sisi, double tinggi) {
+        // pytagoras theorem c^2 = squareroot(a^2 + b^2), if you don't know just read the book retard
+        // Apotema Alas adalah jarak dari pusat alas ke tengah sisi alas (sisi/2)
+        double apotemaAlas = sisi/2;
+        // Menggunakan Teorema Phytagoras pada segitiga siku-siku yang dibentuk oleh:
+        // tinggi limas (A) dan apotema alas (B) untuk mencari tinggi sisi tegak (c)
+        double A = Math.pow(tinggi,2);
+        double B = Math.pow(apotemaAlas, 2);
+        apotema = Math.sqrt(A + B);
+        return apotema;
     }
 
     // OVERRIDING
     @Override
     double hitungLuas() {
-        luasPermukaan = super.luas + (4 * (super.sisi * this.tinggiSisi) / 2 ); // this.tinggiSisi bisa diganti dengan this.hitungTinggiSisi(), menurutmu gimana kyaz
+        double triangleArea =  (sisi * this.apotema) / 2;
+        double luasSelimut = 4 * triangleArea;
+        luasPermukaan = super.luas + luasSelimut; // this.tinggiSisi bisa diganti dengan this.hitungTinggiSisi(), menurutmu gimana kyaz
         return luasPermukaan;
     }
     
     // OVERLOADING
     double hitungLuas(double sisi, double tinggi) {
-        luasPermukaan = super.hitungLuas(sisi) + (4 * (sisi * hitungTinggiSisi(sisi, tinggi)) / 2 );
+        double apotemaLine =  hitungTinggiSisi(sisi, tinggi);
+        double triangleArea =  (sisi * apotemaLine) / 2;
+        double luasSelimut = 4 * triangleArea;
+        luasPermukaan = super.hitungLuas(sisi) + luasSelimut;
         return luasPermukaan;
     }
 
@@ -51,7 +71,8 @@ class LimasPersegi extends Persegi implements Runnable {
 
     // OVERLOADING
     double hitungVolume(double sisi, double tinggi) {
-        volume = (super.hitungLuas(sisi) * tinggi) / 3;
+        double tempLuasAlas = super.hitungLuas(sisi);
+        volume = (tempLuasAlas * tinggi) / 3;
         return volume;
     }
 
@@ -92,11 +113,11 @@ class LimasPersegi extends Persegi implements Runnable {
         appendToGUI(String.format("""
                                   
                                     - [FINISH] Thread - %d (Limas Persegi)
-                                        Sisi : %.2f , Tinggi : %.2f
+                                        Sisi : %.2f , Tinggi : %.2f, apotema: %.2f
                                         Volume: %.2f
                                         Luas Permukaan: %.2f
                                   """,
-                nomorAntrean, this.sisi, this.tinggi, this.volume, this.luasPermukaan
+                nomorAntrean, this.sisi, this.tinggi, this.apotema, this.volume, this.luasPermukaan
             ));
     }
 }
