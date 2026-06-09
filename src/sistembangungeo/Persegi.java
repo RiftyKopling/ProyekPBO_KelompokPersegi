@@ -62,34 +62,21 @@ class Persegi extends Bangun implements Runnable {
 
     @Override
     public void run() {
-        appendToGUI("\n+ Start geometry thread - " + nomorAntrean + " (Persegi)\n");
-        
-        Thread threadLuas = new Thread(() -> {
-            this.luas = this.hitungLuas();
-        });
+        appendToGUI("\n+ Start geometry thread - "
+                + nomorAntrean + " (Persegi)\n");
 
-        Thread threadKeliling = new Thread(() -> {
-            this.keliling = this.hitungKeliling();
-        });
-
-        threadLuas.start();
-        threadKeliling.start();
-
-        try {
-            threadLuas.join();
-            threadKeliling.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        luas = hitungLuas();
+        keliling = hitungKeliling();
 
         appendToGUI(String.format("""
-                                  
-                                    - [FINISH] Thread - %d (Persegi)
-                                        Sisi : %.2f
-                                        Luas: %.2f
-                                        Keliling: %.2f
-                                  """,
-                nomorAntrean, this.sisi, this.luas, this.keliling
-        ));
+                - [FINISH] Thread - %d (Persegi)
+                    Sisi : %.2f
+                    Luas : %.2f
+                    Keliling : %.2f
+                """,
+                nomorAntrean,
+                sisi,
+                luas,
+                keliling));
     }
 }

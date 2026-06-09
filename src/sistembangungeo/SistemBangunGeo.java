@@ -206,17 +206,17 @@ public class SistemBangunGeo extends JFrame {
 
                                 int pilihan = rand.nextInt(3);
 
-                                Persegi bangunYangDipilih;
+                                Persegi persegi;
                                 if (pilihan == 0) {
-                                    bangunYangDipilih = new Persegi(randomSisi);
+                                    persegi = new Persegi(randomSisi);
                                 } else if (pilihan == 1) {
-                                    bangunYangDipilih = new PrismaBujursangkar(randomSisi);
+                                    persegi = new PrismaBujursangkar(randomSisi);
                                 } else {
-                                    bangunYangDipilih = new LimasPersegi(randomSisi, randomTinggi);
+                                    persegi = new LimasPersegi(randomSisi, randomTinggi);
                                 }
 
-                                bangunYangDipilih.setOutputArea(hasil);
-                                bangunYangDipilih.setNomorAntrean(nomorAntrean);
+                                persegi.setOutputArea(hasil);
+                                persegi.setNomorAntrean(nomorAntrean);
 
                                 // Siapkan Progress Bar untuk thread ini
                                 JProgressBar pBar = new JProgressBar(0, 100);
@@ -225,7 +225,7 @@ public class SistemBangunGeo extends JFrame {
 
                                 // Tambahkan label dan progress bar secara dinamis ke panel
                                 SwingUtilities.invokeLater(() -> {
-                                    progressPanel.add(new JLabel("Proses " + nomorAntrean + " (" + bangunYangDipilih.getClass().getSimpleName() + ")"));
+                                    progressPanel.add(new JLabel("Proses " + nomorAntrean + " (" + persegi.getClass().getSimpleName() + ")"));
                                     progressPanel.add(pBar);
                                     progressPanel.add(Box.createRigidArea(new Dimension(0, 10)));
                                     progressPanel.revalidate();
@@ -247,8 +247,9 @@ public class SistemBangunGeo extends JFrame {
                                         }
 
                                         // Eksekusi Runnable Asli dari Objek Bangun
-                                        bangunYangDipilih.run();
-
+                                        Thread tBangun = new Thread(persegi);
+                                        tBangun.start();
+                                        tBangun.join();
                                         // Status Selesai
                                         SwingUtilities.invokeLater(() -> {
                                             pBar.setString("Selesai!");
