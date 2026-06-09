@@ -5,7 +5,6 @@ import javax.swing.*;
 class LimasPersegi extends Persegi implements Runnable {
 
     public double tinggi;
-    // apotema, represent the slant height, or the height of the triangle from pyramid.
     public double apotema;
     public double volume;
     public double luasPermukaan;
@@ -22,44 +21,25 @@ class LimasPersegi extends Persegi implements Runnable {
     }
     
     double hitungTinggiSisi() { 
-        // pytagoras theorem c^2 = squareroot(a^2 + b^2), if you don't know just read the book retard
-        // Apotema Alas adalah jarak dari pusat alas ke tengah sisi alas (sisi/2)
-        double apotemaAlas = this.sisi/2;
-        // Menggunakan Teorema Phytagoras pada segitiga siku-siku yang dibentuk oleh:
-        // tinggi limas (A) dan apotema alas (B) untuk mencari tinggi sisi tegak (c)
-        double A = Math.pow(this.tinggi,2);
-        double B = Math.pow(apotemaAlas, 2);
-        apotema = Math.sqrt(A + B);
+        apotema = Math.sqrt(Math.pow(this.tinggi,2) + Math.pow(this.sisi/2, 2));
         return apotema;
     }
     
     double hitungTinggiSisi(double sisi, double tinggi) {
-        // pytagoras theorem c^2 = squareroot(a^2 + b^2), if you don't know just read the book retard
-        // Apotema Alas adalah jarak dari pusat alas ke tengah sisi alas (sisi/2)
-        double apotemaAlas = sisi/2;
-        // Menggunakan Teorema Phytagoras pada segitiga siku-siku yang dibentuk oleh:
-        // tinggi limas (A) dan apotema alas (B) untuk mencari tinggi sisi tegak (c)
-        double A = Math.pow(tinggi,2);
-        double B = Math.pow(apotemaAlas, 2);
-        apotema = Math.sqrt(A + B);
+        apotema = Math.sqrt(Math.pow(sisi/2, 2) + Math.pow(tinggi,2));
         return apotema;
     }
 
     // OVERRIDING
     @Override
     double hitungLuas() {
-        double triangleArea =  (sisi * this.apotema) / 2;
-        double luasSelimut = 4 * triangleArea;
-        luasPermukaan = super.luas + luasSelimut; // this.tinggiSisi bisa diganti dengan this.hitungTinggiSisi(), menurutmu gimana kyaz
+        luasPermukaan = super.luas + (4 * ((super.sisi * this.apotema) / 2)); // this.tinggiSisi bisa diganti dengan this.hitungTinggiSisi(), menurutmu gimana kyaz
         return luasPermukaan;
     }
     
     // OVERLOADING
     double hitungLuas(double sisi, double tinggi) {
-        double apotemaLine =  hitungTinggiSisi(sisi, tinggi);
-        double triangleArea =  (sisi * apotemaLine) / 2;
-        double luasSelimut = 4 * triangleArea;
-        luasPermukaan = super.hitungLuas(sisi) + luasSelimut;
+        luasPermukaan = super.hitungLuas(sisi) + (4 * ((sisi * hitungTinggiSisi(sisi, tinggi)) / 2));
         return luasPermukaan;
     }
 
@@ -71,8 +51,7 @@ class LimasPersegi extends Persegi implements Runnable {
 
     // OVERLOADING
     double hitungVolume(double sisi, double tinggi) {
-        double tempLuasAlas = super.hitungLuas(sisi);
-        volume = (tempLuasAlas * tinggi) / 3;
+        volume = (super.hitungLuas(sisi) * tinggi) / 3;
         return volume;
     }
 
@@ -90,34 +69,27 @@ class LimasPersegi extends Persegi implements Runnable {
 
     @Override
     public void run() {
-        appendToGUI("\n+ Start geometry thread - " + nomorAntrean + " (Limas Persegi)\n");
-        
-        Thread threadVolume = new Thread(() -> {
-            this.volume = hitungVolume();
-        });
+        appendToGUI("\n+ Start geometry thread - "
+                + nomorAntrean + " (Limas Persegi)\n");
 
-        Thread threadLuas = new Thread(() -> {
-            this.luasPermukaan = hitungLuas();
-        });
-        
-        threadVolume.start();
-        threadLuas.start();
-        
-        try {
-            threadVolume.join();
-            threadLuas.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        
+        this.volume = hitungVolume();
+        this.luasPermukaan = hitungLuas();
+
         appendToGUI(String.format("""
-                                  
-                                    - [FINISH] Thread - %d (Limas Persegi)
-                                        Sisi : %.2f , Tinggi : %.2f, apotema: %.2f
-                                        Volume: %.2f
-                                        Luas Permukaan: %.2f
-                                  """,
-                nomorAntrean, this.sisi, this.tinggi, this.apotema, this.volume, this.luasPermukaan
-            ));
+
+                    - [FINISH] Thread - %d (Limas Persegi)
+                        Sisi : %.2f
+                        Tinggi : %.2f
+                        Apotema : %.2f
+                        Volume : %.2f
+                        Luas Permukaan : %.2f
+                """,
+                nomorAntrean,
+                this.sisi,
+                this.tinggi,
+                this.apotema,
+                this.volume,
+                this.luasPermukaan
+        ));
     }
 }
