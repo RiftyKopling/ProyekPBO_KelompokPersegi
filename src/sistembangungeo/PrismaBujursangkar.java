@@ -19,23 +19,23 @@ class PrismaBujursangkar extends Persegi {
 
     @Override
     double hitungLuas() {
-        luasPermukaan = 4 * super.luas;
-        return luasPermukaan;
+        this.luasPermukaan = 4 * super.luas;
+        return this.luasPermukaan;
     }
     
     double hitungLuas(double sisi) {
-        luasPermukaan = 4 * super.hitungLuas(sisi);
-        return luasPermukaan;
+        this.luasPermukaan = 4 * super.hitungLuas(sisi);
+        return this.luasPermukaan;
     }
     
     double hitungVolume() {
-        volume = super.luas * super.sisi; 
-        return volume;
+        this.volume = super.luas * super.sisi; 
+        return this.volume;
     }
 
     double hitungVolume(double sisi) {
-        volume = super.hitungLuas(sisi) *  sisi; 
-        return volume;
+        this.volume = super.hitungLuas(sisi) *  sisi; 
+        return this.volume;
     }
 
     public void setOutputArea(JTextArea outputArea) {
@@ -55,8 +55,8 @@ class PrismaBujursangkar extends Persegi {
         appendToGUI("\n+ Start geometry thread - "
                 + nomorAntrean + " (Prisma Bujur Sangkar)\n");
 
-        volume = hitungVolume();
-        luasPermukaan = hitungLuas();
+        this.volume = hitungVolume();
+        this.luasPermukaan = hitungLuas();
 
         appendToGUI(String.format("""
                 - [FINISH] Thread - %d (Prisma Bujur Sangkar)

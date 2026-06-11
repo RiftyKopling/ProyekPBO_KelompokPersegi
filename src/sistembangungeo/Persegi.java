@@ -14,6 +14,9 @@ class Persegi extends Bangun implements Runnable {
 
     // CONSTRUCTOR
     public Persegi(double sisi) {
+        if (sisi <= 0) {
+            throw new IllegalArgumentException("Sisi tidak boleh <= 0");
+        }
         this.sisi = sisi;
         super.jenisBangun = "Bangun Datar";
     }
@@ -21,27 +24,27 @@ class Persegi extends Bangun implements Runnable {
     // OVERRIDING
     @Override
     double hitungLuas() {
-        luas = this.sisi * this.sisi;
-        return luas;
+        this.luas = this.sisi * this.sisi;
+        return this.luas;
     }
 
     // OVERLOADING
     @Override
     double hitungLuas(double sisi) {
-        luas = sisi * sisi;
-        return luas;
+        this.luas = sisi * sisi;
+        return this.luas;
     }
 
     @Override
     double hitungKeliling() {
-        keliling = 4 * this.sisi;
-        return keliling;
+        this.keliling = 4 * this.sisi;
+        return this.keliling;
     }
 
     @Override
     double hitungKeliling(double sisi) {
-        keliling = 4 * sisi;
-        return keliling;
+        this.keliling = 4 * sisi;
+        return this.keliling;
     }
 
     public void setOutputArea(JTextArea outputArea) {
@@ -65,8 +68,8 @@ class Persegi extends Bangun implements Runnable {
         appendToGUI("\n+ Start geometry thread - "
                 + nomorAntrean + " (Persegi)\n");
 
-        luas = hitungLuas();
-        keliling = hitungKeliling();
+        this.luas = hitungLuas();
+        this.keliling = hitungKeliling();
 
         appendToGUI(String.format("""
                 - [FINISH] Thread - %d (Persegi)

@@ -6,22 +6,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 
-
-/**
- * @author Morxidia
- */
-
 public class SistemBangunGeo extends JFrame {
 
-    // GLOBAL ATTRIBUTE
-
-
     public SistemBangunGeo() {
-        // deprecated, all Bangun instance is move to it's dedicated page
-        
-        // Bangun bangun;
-
-        // COMPONENT
         JLabel title = new JLabel("SISTEM BANGUN GEO");
         JButton btnPersegi = new JButton("Persegi");
         JButton btnLimas = new JButton("Limas Persegi");
@@ -53,9 +40,8 @@ public class SistemBangunGeo extends JFrame {
         progressPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         progressScroll = new JScrollPane(progressPanel);
         progressScroll.setBounds(570, 20, 350, 380);
-        progressScroll.setVisible(false); // Sembunyikan di awal
+        progressScroll.setVisible(false);
 
-        // ADD
         add(title);
         add(btnPersegi);
         add(btnLimas);
@@ -64,11 +50,9 @@ public class SistemBangunGeo extends JFrame {
         add(scrollHasil);
         add(progressScroll);
         
-        // using array for making sisiGLobal work, hide it from Charlibaldi
         double[] sisiGlobal = new double[1];
         sisiGlobal[0] = 0;
 
-        // BUTTON PERSEGI
         btnPersegi.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -76,7 +60,6 @@ public class SistemBangunGeo extends JFrame {
                 try {
                     Double sisiPersegi = Double.parseDouble(JOptionPane.showInputDialog("Masukkan sisi"));
 
-                    // throw new exception for input 0 or lower
                     if(sisiPersegi <= 0){
                         throw new Exception("Input can't be 0 or lower");
                     }
@@ -114,11 +97,9 @@ public class SistemBangunGeo extends JFrame {
                     
                     Double tinggiLimas = Double.parseDouble(JOptionPane.showInputDialog("Masukkan tinggi limas"));
                     
-                    // throw new exception for input 0 or lower
                     if(tinggiLimas <= 0){
                         throw new Exception("Input can't be 0 or lower");
                     }
-                    // POLYMORPHISM
                     Bangun bangun = new LimasPersegi(sisiGlobal[0], tinggiLimas);
                     LimasPersegi limasPersegi = (LimasPersegi) bangun;
                     Thread t = new Thread(limasPersegi);
@@ -159,7 +140,6 @@ public class SistemBangunGeo extends JFrame {
                     t.join();
                     hasil.setText("=== PRISMA BUJUR SANGKAR / " + prismaBujur.jenisBangun + " ===\n\n"
                             + "Sisi : " + prismaBujur.sisi
-                            // using new instance for not make mistake of luasPermukaan and luasAlas, sure hide it from Charlibaldi
                             + "\nLuas Alas : " + (new Persegi(sisiGlobal[0])).hitungLuas(sisiGlobal[0])
                             + "\nKeliling Alas : " + prismaBujur.hitungKeliling()
                             + "\nVolume : " + prismaBujur.hitungVolume()
@@ -232,10 +212,8 @@ public class SistemBangunGeo extends JFrame {
                                     progressPanel.repaint();
                                 });
 
-                                // Buat Wrapper Thread untuk mensimulasikan animasi Progress Bar
                                 Thread thread = new Thread(() -> {
                                     try {
-                                        // Simulasi tugas loading (agar progress bar terlihat bergerak balapan)
                                         int delayVisual = 10 + rand.nextInt(30); 
                                         for (int p = 0; p <= 100; p += 2) {
                                             final int progress = p;
@@ -246,11 +224,9 @@ public class SistemBangunGeo extends JFrame {
                                             Thread.sleep(delayVisual);
                                         }
 
-                                        // Eksekusi Runnable Asli dari Objek Bangun
                                         Thread tBangun = new Thread(persegi);
                                         tBangun.start();
                                         tBangun.join();
-                                        // Status Selesai
                                         SwingUtilities.invokeLater(() -> {
                                             pBar.setString("Selesai!");
                                         });
@@ -264,7 +240,6 @@ public class SistemBangunGeo extends JFrame {
                                 thread.start();
                             }
 
-                            // join all thread before calculate the time excecution
                             for (Thread t : activeThreads) {
                                 t.join();
                             }
@@ -308,7 +283,6 @@ public class SistemBangunGeo extends JFrame {
     }
     public static void main(String[] args) {
         try{
-            // Now runs SistemBangunGeo directly instead of View!
             SwingUtilities.invokeLater(() -> {
                 new SistemBangunGeo().setVisible(true);
             });

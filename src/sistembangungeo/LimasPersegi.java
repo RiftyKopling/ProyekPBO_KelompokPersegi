@@ -13,6 +13,9 @@ class LimasPersegi extends Persegi implements Runnable {
 
     public LimasPersegi(double sisi, double tinggi) {
         super(sisi);
+        if (tinggi <= 0) {
+            throw new IllegalArgumentException("Tinggi tidak boleh <= 0");
+        }
         this.tinggi = tinggi;
         super.jenisBangun = "Bangun Ruang";
         super.hitungLuas();
@@ -21,38 +24,38 @@ class LimasPersegi extends Persegi implements Runnable {
     }
     
     double hitungTinggiSisi() { 
-        apotema = Math.sqrt(Math.pow(this.tinggi,2) + Math.pow(this.sisi/2, 2));
-        return apotema;
+        this.apotema = Math.sqrt(Math.pow(this.tinggi,2) + Math.pow(this.sisi/2, 2));
+        return this.apotema;
     }
     
     double hitungTinggiSisi(double sisi, double tinggi) {
-        apotema = Math.sqrt(Math.pow(sisi/2, 2) + Math.pow(tinggi,2));
-        return apotema;
+        this.apotema = Math.sqrt(Math.pow(sisi/2, 2) + Math.pow(tinggi,2));
+        return this.apotema;
     }
 
     // OVERRIDING
     @Override
     double hitungLuas() {
-        luasPermukaan = super.luas + (4 * ((super.sisi * this.apotema) / 2)); // this.tinggiSisi bisa diganti dengan this.hitungTinggiSisi(), menurutmu gimana kyaz
-        return luasPermukaan;
+        this.luasPermukaan = super.luas + (4 * ((super.sisi * this.apotema) / 2)); // this.tinggiSisi bisa diganti dengan this.hitungTinggiSisi(), menurutmu gimana kyaz
+        return this.luasPermukaan;
     }
     
     // OVERLOADING
     double hitungLuas(double sisi, double tinggi) {
-        luasPermukaan = super.hitungLuas(sisi) + (4 * ((sisi * hitungTinggiSisi(sisi, tinggi)) / 2));
-        return luasPermukaan;
+        this.luasPermukaan = super.hitungLuas(sisi) + (4 * ((sisi * this.hitungTinggiSisi(sisi, tinggi)) / 2));
+        return this.luasPermukaan;
     }
 
     // OVERLOADING METHOD
     double hitungVolume() {
-        volume = super.luas * tinggi / 3;
-        return volume;
+        this.volume = super.luas * this.tinggi / 3;
+        return this.volume;
     }
 
     // OVERLOADING
     double hitungVolume(double sisi, double tinggi) {
-        volume = (super.hitungLuas(sisi) * tinggi) / 3;
-        return volume;
+        this.volume = (super.hitungLuas(sisi) * tinggi) / 3;
+        return this.volume;
     }
 
     public void setOutputArea(JTextArea outputArea) {
