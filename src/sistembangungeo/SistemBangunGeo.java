@@ -17,9 +17,6 @@ public class SistemBangunGeo extends JFrame {
 
 
     public SistemBangunGeo() {
-        // deprecated, all Bangun instance is move to it's dedicated page
-        
-        // Bangun bangun;
 
         // COMPONENT
         JLabel title = new JLabel("SISTEM BANGUN GEO");
@@ -63,8 +60,6 @@ public class SistemBangunGeo extends JFrame {
         add(btnThread);
         add(scrollHasil);
         add(progressScroll);
-        
-        // using array for making sisiGLobal work, hide it from Charlibaldi
         double[] sisiGlobal = new double[1];
         sisiGlobal[0] = 0;
 
