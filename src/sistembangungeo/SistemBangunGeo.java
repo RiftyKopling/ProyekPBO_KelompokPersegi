@@ -7,6 +7,11 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 
 public class SistemBangunGeo extends JFrame {
+    public static class InvalidInputException extends Exception {
+        public InvalidInputException(String message) {
+            super(message);
+        }
+    }
 
     public SistemBangunGeo() {
         JLabel title = new JLabel("SISTEM BANGUN GEO");
@@ -61,7 +66,7 @@ public class SistemBangunGeo extends JFrame {
                     Double sisiPersegi = Double.parseDouble(JOptionPane.showInputDialog("Masukkan sisi"));
 
                     if(sisiPersegi <= 0){
-                        throw new Exception("Input can't be 0 or lower");
+                        throw new InvalidInputException("Input can't be 0 or lower");
                     }
                     sisiGlobal[0] = sisiPersegi;
                     // POLYMORPHISM
@@ -78,7 +83,7 @@ public class SistemBangunGeo extends JFrame {
                 }
                 catch (HeadlessException | InterruptedException | NumberFormatException ex) {
                     JOptionPane.showMessageDialog(null, "Input Invalid, Do not input non numerical value");
-                } catch (Exception ex) {
+                } catch (InvalidInputException ex) {
                     JOptionPane.showMessageDialog(null, ex.getMessage());
                 }
             }
