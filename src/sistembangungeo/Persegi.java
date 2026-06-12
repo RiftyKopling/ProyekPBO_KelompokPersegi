@@ -31,6 +31,9 @@ class Persegi extends Bangun implements Runnable {
     // OVERLOADING
     @Override
     double hitungLuas(double sisi) {
+        if (sisi <= 0) {
+            throw new IllegalArgumentException("Sisi tidak boleh <= 0");
+        }
         this.luas = sisi * sisi;
         return this.luas;
     }
@@ -43,6 +46,9 @@ class Persegi extends Bangun implements Runnable {
 
     @Override
     double hitungKeliling(double sisi) {
+        if (sisi <= 0) {
+            throw new IllegalArgumentException("Sisi tidak boleh <= 0");
+        }
         this.keliling = 4 * sisi;
         return this.keliling;
     }

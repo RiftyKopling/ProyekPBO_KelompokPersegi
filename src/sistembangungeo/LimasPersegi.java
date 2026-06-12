@@ -29,31 +29,35 @@ class LimasPersegi extends Persegi implements Runnable {
     }
     
     double hitungTinggiSisi(double sisi, double tinggi) {
+        if (sisi <= 0 || tinggi <= 0) {
+            throw new IllegalArgumentException("Sisi atau tinggi tidak boleh <= 0");
+        }
         this.apotema = Math.sqrt(Math.pow(sisi/2, 2) + Math.pow(tinggi,2));
         return this.apotema;
     }
 
-    // OVERRIDING
-    @Override
-    double hitungLuas() {
+    double hitungLuasPermukaan() {
         this.luasPermukaan = super.luas + (4 * ((super.sisi * this.apotema) / 2)); // this.tinggiSisi bisa diganti dengan this.hitungTinggiSisi(), menurutmu gimana kyaz
         return this.luasPermukaan;
     }
     
-    // OVERLOADING
-    double hitungLuas(double sisi, double tinggi) {
+    double hitungLuasPermukaan(double sisi, double tinggi) {
+        if (sisi <= 0 || tinggi <= 0) {
+            throw new IllegalArgumentException("Sisi atau tinggi tidak boleh <= 0");
+        }
         this.luasPermukaan = super.hitungLuas(sisi) + (4 * ((sisi * this.hitungTinggiSisi(sisi, tinggi)) / 2));
         return this.luasPermukaan;
     }
 
-    // OVERLOADING METHOD
     double hitungVolume() {
         this.volume = super.luas * this.tinggi / 3;
         return this.volume;
     }
 
-    // OVERLOADING
     double hitungVolume(double sisi, double tinggi) {
+        if (sisi <= 0 || tinggi <= 0) {
+            throw new IllegalArgumentException("Sisi atau tinggi tidak boleh <= 0");
+        }
         this.volume = (super.hitungLuas(sisi) * tinggi) / 3;
         return this.volume;
     }
@@ -76,7 +80,7 @@ class LimasPersegi extends Persegi implements Runnable {
                 + nomorAntrean + " (Limas Persegi)\n");
 
         this.volume = hitungVolume();
-        this.luasPermukaan = hitungLuas();
+        this.luasPermukaan = hitungLuasPermukaan();
 
         appendToGUI(String.format("""
 

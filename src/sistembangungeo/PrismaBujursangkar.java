@@ -17,13 +17,15 @@ class PrismaBujursangkar extends Persegi {
         super.hitungKeliling();
     }
 
-    @Override
-    double hitungLuas() {
+    double hitungLuasPermukaan() {
         this.luasPermukaan = 4 * super.luas;
         return this.luasPermukaan;
     }
     
-    double hitungLuas(double sisi) {
+    double hitungLuasPermukaan(double sisi) {
+        if (sisi <= 0) {
+            throw new IllegalArgumentException("Sisi tidak boleh <= 0");
+        }
         this.luasPermukaan = 4 * super.hitungLuas(sisi);
         return this.luasPermukaan;
     }
@@ -34,6 +36,9 @@ class PrismaBujursangkar extends Persegi {
     }
 
     double hitungVolume(double sisi) {
+        if (sisi <= 0) {
+            throw new IllegalArgumentException("Sisi tidak boleh <= 0");
+        }
         this.volume = super.hitungLuas(sisi) *  sisi; 
         return this.volume;
     }
@@ -56,7 +61,7 @@ class PrismaBujursangkar extends Persegi {
                 + nomorAntrean + " (Prisma Bujur Sangkar)\n");
 
         this.volume = hitungVolume();
-        this.luasPermukaan = hitungLuas();
+        this.luasPermukaan = hitungLuasPermukaan();
 
         appendToGUI(String.format("""
                 - [FINISH] Thread - %d (Prisma Bujur Sangkar)

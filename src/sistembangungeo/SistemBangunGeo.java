@@ -101,10 +101,6 @@ public class SistemBangunGeo extends JFrame {
                     }
                     
                     Double tinggiLimas = Double.parseDouble(JOptionPane.showInputDialog("Masukkan tinggi limas"));
-                    
-                    if(tinggiLimas <= 0){
-                        throw new Exception("Input can't be 0 or lower");
-                    }
                     Bangun bangun = new LimasPersegi(sisiGlobal[0], tinggiLimas);
                     LimasPersegi limasPersegi = (LimasPersegi) bangun;
                     Thread t = new Thread(limasPersegi);
@@ -120,7 +116,7 @@ public class SistemBangunGeo extends JFrame {
                 }
                 catch (HeadlessException | InterruptedException | NumberFormatException ex) {
                     JOptionPane.showMessageDialog(null, "Input Invalid, Do not input non numerical value");
-                }catch (Exception ex) {
+                }catch (IllegalArgumentException ex) {
                     JOptionPane.showMessageDialog(null, ex.getMessage());
                 }
             }
