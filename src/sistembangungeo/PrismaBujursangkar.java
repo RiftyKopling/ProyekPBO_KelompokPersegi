@@ -2,7 +2,7 @@ package sistembangungeo;
 
 import javax.swing.*;
 
-class PrismaBujursangkar extends Persegi {
+class PrismaBujursangkar extends Persegi implements Runnable{
 
 //    public double tinggi;
     public double volume;

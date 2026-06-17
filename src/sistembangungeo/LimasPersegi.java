@@ -37,7 +37,7 @@ class LimasPersegi extends Persegi implements Runnable {
     }
 
     double hitungLuasPermukaan() {
-        this.luasPermukaan = super.luas + (4 * ((super.sisi * this.apotema) / 2)); // this.tinggiSisi bisa diganti dengan this.hitungTinggiSisi(), menurutmu gimana kyaz
+        this.luasPermukaan = super.luas + (4 * ((super.sisi * this.apotema) / 2)); 
         return this.luasPermukaan;
     }
     
