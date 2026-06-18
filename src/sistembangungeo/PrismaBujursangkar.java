@@ -22,9 +22,10 @@ class PrismaBujursangkar extends Persegi implements Runnable{
         return this.luasPermukaan;
     }
     
-    double hitungLuasPermukaan(double sisi) {
+    double hitungLuasPermukaan(double sisi) throws IllegalArgumentException {
         if (sisi <= 0) {
-            throw new IllegalArgumentException("Sisi tidak boleh <= 0");
+            IllegalArgumentException illegal =  new IllegalArgumentException("Sisi tidak boleh <= 0");
+            throw illegal;
         }
         this.luasPermukaan = 4 * super.hitungLuas(sisi);
         return this.luasPermukaan;
@@ -35,9 +36,10 @@ class PrismaBujursangkar extends Persegi implements Runnable{
         return this.volume;
     }
 
-    double hitungVolume(double sisi) {
+    double hitungVolume(double sisi) throws IllegalArgumentException{
         if (sisi <= 0) {
-            throw new IllegalArgumentException("Sisi tidak boleh <= 0");
+            IllegalArgumentException illegal = new IllegalArgumentException("Sisi tidak boleh <= 0");
+            throw illegal;
         }
         this.volume = super.hitungLuas(sisi) *  sisi; 
         return this.volume;

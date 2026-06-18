@@ -13,9 +13,10 @@ class Persegi extends Bangun implements Runnable {
     public int nomorAntrean;
 
     // CONSTRUCTOR
-    public Persegi(double sisi) {
+    public Persegi(double sisi) throws IllegalArgumentException {
         if (sisi <= 0) {
-            throw new IllegalArgumentException("Sisi tidak boleh <= 0");
+            IllegalArgumentException illegal = new IllegalArgumentException("Sisi tidak boleh <= 0");
+            throw illegal;
         }
         this.sisi = sisi;
         super.jenisBangun = "Bangun Datar";
@@ -30,9 +31,10 @@ class Persegi extends Bangun implements Runnable {
 
     // OVERLOADING
     @Override
-    double hitungLuas(double sisi) {
+    double hitungLuas(double sisi) throws IllegalArgumentException {
         if (sisi <= 0) {
-            throw new IllegalArgumentException("Sisi tidak boleh <= 0");
+            IllegalArgumentException illegal = new IllegalArgumentException("Sisi tidak boleh <= 0");
+            throw illegal;
         }
         this.luas = sisi * sisi;
         return this.luas;
@@ -45,9 +47,10 @@ class Persegi extends Bangun implements Runnable {
     }
 
     @Override
-    double hitungKeliling(double sisi) {
+    double hitungKeliling(double sisi) throws IllegalArgumentException {
         if (sisi <= 0) {
-            throw new IllegalArgumentException("Sisi tidak boleh <= 0");
+            IllegalArgumentException illegal = new IllegalArgumentException("Sisi tidak boleh <= 0");
+            throw illegal;
         }
         this.keliling = 4 * sisi;
         return this.keliling;

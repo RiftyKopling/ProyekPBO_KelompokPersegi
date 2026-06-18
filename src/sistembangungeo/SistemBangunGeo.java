@@ -65,9 +65,10 @@ public class SistemBangunGeo extends JFrame {
                 try {
                     Double sisiPersegi = Double.parseDouble(JOptionPane.showInputDialog("Masukkan sisi"));
 
-                    if(sisiPersegi <= 0){
-                        throw new InvalidInputException("Input can't be 0 or lower");
-                    }
+//                    if(sisiPersegi <= 0){
+//                        InvalidInputException invalidInput = new InvalidInputException("Input can't be 0 or lower");
+//                        throw invalidInput;
+//                    }
                     sisiGlobal[0] = sisiPersegi;
                     // POLYMORPHISM
                     Bangun bangun = new Persegi(sisiPersegi);
@@ -83,8 +84,8 @@ public class SistemBangunGeo extends JFrame {
                 }
                 catch (HeadlessException | InterruptedException | NumberFormatException ex) {
                     JOptionPane.showMessageDialog(null, "Input Invalid, Do not input non numerical value");
-                } catch (InvalidInputException ex) {
-                    JOptionPane.showMessageDialog(null, ex.getMessage());
+                } catch (IllegalArgumentException illegal) {
+                    JOptionPane.showMessageDialog(null, illegal.getMessage());
                 }
             }
         });
@@ -116,8 +117,8 @@ public class SistemBangunGeo extends JFrame {
                 }
                 catch (HeadlessException | InterruptedException | NumberFormatException ex) {
                     JOptionPane.showMessageDialog(null, "Input Invalid, Do not input non numerical value");
-                }catch (IllegalArgumentException ex) {
-                    JOptionPane.showMessageDialog(null, ex.getMessage());
+                }catch (IllegalArgumentException illegal) {
+                    JOptionPane.showMessageDialog(null, illegal.getMessage());
                 }
             }
         });

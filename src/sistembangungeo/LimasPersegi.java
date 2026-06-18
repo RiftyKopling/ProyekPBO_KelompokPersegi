@@ -11,10 +11,11 @@ class LimasPersegi extends Persegi implements Runnable {
 
     private JTextArea outputArea;
 
-    public LimasPersegi(double sisi, double tinggi) {
+    public LimasPersegi(double sisi, double tinggi) throws IllegalArgumentException {
         super(sisi);
         if (tinggi <= 0) {
-            throw new IllegalArgumentException("Tinggi tidak boleh <= 0");
+            IllegalArgumentException illegal = new IllegalArgumentException("Tinggi tidak boleh <= 0");
+            throw illegal;
         }
         this.tinggi = tinggi;
         super.jenisBangun = "Bangun Ruang";
@@ -28,9 +29,10 @@ class LimasPersegi extends Persegi implements Runnable {
         return this.apotema;
     }
     
-    double hitungTinggiSisi(double sisi, double tinggi) {
+    double hitungTinggiSisi(double sisi, double tinggi) throws IllegalArgumentException {
         if (sisi <= 0 || tinggi <= 0) {
-            throw new IllegalArgumentException("Sisi atau tinggi tidak boleh <= 0");
+            IllegalArgumentException illegal =  new IllegalArgumentException("Sisi atau tinggi tidak boleh <= 0");
+            throw illegal;
         }
         this.apotema = Math.sqrt(Math.pow(sisi/2, 2) + Math.pow(tinggi,2));
         return this.apotema;
@@ -41,9 +43,10 @@ class LimasPersegi extends Persegi implements Runnable {
         return this.luasPermukaan;
     }
     
-    double hitungLuasPermukaan(double sisi, double tinggi) {
+    double hitungLuasPermukaan(double sisi, double tinggi) throws IllegalArgumentException {
         if (sisi <= 0 || tinggi <= 0) {
-            throw new IllegalArgumentException("Sisi atau tinggi tidak boleh <= 0");
+            IllegalArgumentException illegal =  new IllegalArgumentException("Sisi atau tinggi tidak boleh <= 0");
+            throw illegal;
         }
         this.luasPermukaan = super.hitungLuas(sisi) + (4 * ((sisi * this.hitungTinggiSisi(sisi, tinggi)) / 2));
         return this.luasPermukaan;
@@ -54,9 +57,10 @@ class LimasPersegi extends Persegi implements Runnable {
         return this.volume;
     }
 
-    double hitungVolume(double sisi, double tinggi) {
+    double hitungVolume(double sisi, double tinggi) throws IllegalArgumentException {
         if (sisi <= 0 || tinggi <= 0) {
-            throw new IllegalArgumentException("Sisi atau tinggi tidak boleh <= 0");
+            IllegalArgumentException illegal = new IllegalArgumentException("Sisi atau tinggi tidak boleh <= 0");
+            throw illegal;
         }
         this.volume = (super.hitungLuas(sisi) * tinggi) / 3;
         return this.volume;
